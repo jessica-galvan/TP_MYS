@@ -1,12 +1,15 @@
 ﻿
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class CubeMovement : MonoBehaviour
 {
+   
+
     //variable publica, es como exportar la variable a Unity
     public float _speed;
-    public Transform target;
-    private Vector3 direction;
+    //public Transform target;
+    
 
 private void Awake()
     {
@@ -37,9 +40,10 @@ private void Awake()
 
 
         //Time.deltaTime nos devuelve los SEGUNDOS que suceden entre frame y frame. sirve para asegurarse que la velocidad sea independiente de los FPS de la computadora
-        direction = Vector3.zero;
 
+        var direction = Vector3.zero;
 
+        
         if (Input.GetKey(KeyCode.W))
             direction += transform.up;
         if (Input.GetKey(KeyCode.D))
@@ -49,8 +53,12 @@ private void Awake()
         if (Input.GetKey(KeyCode.S))
             direction += -transform.up;
 
-        
-        transform.position += direction * (_speed * Time.deltaTime); 
+       
+     
+    }  
+     
 
-    }
+    
+    
+    
 }
