@@ -20,22 +20,21 @@ public class PlayerBehaviour : MonoBehaviour
 
 	void Update()
     {
+		//Capta movimientos Horizontales y Verticales. 
 		movement.x = Input.GetAxisRaw("Horizontal");
 		movement.y = Input.GetAxisRaw("Vertical");
 
+		//Dentro del animator, set las vairables especificadas con los valores obtenidos de con los GetAxisRaw.
 		animator.SetFloat("Horizontal", movement.x);
 		animator.SetFloat("Vertical", movement.y);
 		animator.SetFloat("Speed", movement.sqrMagnitude);
 
-		//Obtener la posicion actual del mouse dentor del juego. Y convierto el Vector3 en 2.	
-		//actualMousePosition = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		//Hacer que salga un proyectil al apretar el boton izquierdo del mouse.
 		if (Input.GetKeyDown(KeyCode.Mouse0))
 		{
 			Instantiate(proyectil, transform.position, transform.rotation);
-			//animatorPlayer.SetTrigger("OnAttack");
+			//animator.SetTrigger("OnAttack");
 		}
-				
 	}
 
 	private void FixedUpdate()

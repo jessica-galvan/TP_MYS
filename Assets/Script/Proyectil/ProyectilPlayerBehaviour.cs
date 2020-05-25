@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Numerics;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 public class ProyectilPlayerBehaviour : MonoBehaviour
 { 
@@ -10,24 +13,26 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 	private float speed = 6f;
 	private DateTime birthObject;
 	private double timeOfLife = 3; //porque el AddSeconds lo pide como doble. 
-	[SerializeField]
 	private GameObject player;
+	[SerializeField]
+	private Rigidbody2D rb;
+	//[SerializeField]
+	//private float force;
 
 	void Awake()
 	{
+		//Obtener la posicion actual del mouse dentor del juego.	
 		actualPositionMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		birthObject = DateTime.Now;
 		player = GameObject.Find("Player");
-		Debug.Log(player);
+		direction = (Vector3)actualPositionMouse - player.transform.position;
+		direction.Normalize();
 	}
 
 	void Update()
 	{
-		direction = (Vector3)actualPositionMouse - player.transform.position;
-		direction.Normalize();
-		transform.position += (Vector3)direction * speed * Time.deltaTime;
-		Debug.Log(actualPositionMouse);
 		//Se lo transforma a 3D para que funcione. 
+		transform.position += (Vector3)direction * speed * Time.deltaTime;
 
 		//Para darle un tiempo de vida al proyectil y que luego se destruya de la escena EL OBJETO.
 		if (DateTime.Now > birthObject.AddSeconds(timeOfLife))
@@ -35,5 +40,13 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 			Destroy(gameObject);
 		}
 	}
-
+	//hacemos que cuando entra en collision con una pared, refleje. 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+		if(collision.gameObject.CompareTag("Wall"))
+        {
+			direction = Vector2.Reflect(direction, collision.contacts[0].normal);
+			Debug.Log("Choco");
+		}
+    }
 }
