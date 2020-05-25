@@ -71,6 +71,7 @@
     <Compile Include="Assets\Script\Clases Viejas\PlatformMovement.cs" />
     <Compile Include="Assets\Script\Clases Viejas\Rotator.cs" />
     <Compile Include="Assets\Script\Player\PlayerBehaviour.cs" />
+    <Compile Include="Assets\Script\Proyectil\ProyectilPlayerBehaviour.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Unity/TP_MYS/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

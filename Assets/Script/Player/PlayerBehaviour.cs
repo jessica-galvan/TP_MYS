@@ -6,14 +6,17 @@ using UnityEngine;
 using Vector2 = UnityEngine.Vector3;
 public class PlayerBehaviour : MonoBehaviour
 {
-	public Animator animator;
 	private float moveSpeed = 5f;
 	private Vector2 movement;
 	[SerializeField]     //Permite que se vea en Unity aunque sea privado, asi le arrastramos el objeto
 	private Rigidbody2D rb;
+	[SerializeField]
+	private GameObject proyectil;
+	[SerializeField]
+	private Animator animator;
 
 	//private Vector3 actualMousePosition;
-	//private GameObject proyectil;
+
 
 	void Update()
     {
@@ -27,14 +30,12 @@ public class PlayerBehaviour : MonoBehaviour
 		//Obtener la posicion actual del mouse dentor del juego. Y convierto el Vector3 en 2.	
 		//actualMousePosition = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		//Hacer que salga un proyectil al apretar el boton izquierdo del mouse.
-		/*if (Input.GetKeyDown(KeyCode.Mouse0))
+		if (Input.GetKeyDown(KeyCode.Mouse0))
 		{
 			Instantiate(proyectil, transform.position, transform.rotation);
 			//animatorPlayer.SetTrigger("OnAttack");
 		}
-
-		//Luego vemos para hacer que rebote. (usar lo que hizo el profesor en clase).
-		*/
+				
 	}
 
 	private void FixedUpdate()
