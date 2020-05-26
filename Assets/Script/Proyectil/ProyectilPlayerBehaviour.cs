@@ -7,7 +7,9 @@ using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
 public class ProyectilPlayerBehaviour : MonoBehaviour
-{ 
+{
+
+	public float Damage = 1f;
 	private Vector2 actualPositionMouse; 
 	private Vector2 direction;
 	private float speed = 6f;
@@ -48,5 +50,22 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 			direction = Vector2.Reflect(direction, collision.contacts[0].normal);
 			Debug.Log("Choco");
 		}
+		
     }
+
+	public void OnTriggerEnter2D(Collider2D collision)
+	{
+		Enemy enemy = collision.GetComponent<Enemy>();
+		{
+			if (enemy != null)
+			{
+
+				enemy.TakeDamage(1);
+
+			}
+
+
+
+		}
+	}
 }
