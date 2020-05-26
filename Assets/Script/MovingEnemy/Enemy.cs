@@ -15,20 +15,16 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.position += new Vector3(0, 0.04f * Mathf.Sin(1f * Time.time));
     }
 
     public void TakeDamage(int damage)
     {
-
         health -= damage;
         if (health < 0)
         {
             Die();
         }
-        
-
-
     }
 
     void Die()

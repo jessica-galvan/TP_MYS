@@ -6,6 +6,7 @@ using UnityEngine;
 using Vector2 = UnityEngine.Vector3;
 public class PlayerBehaviour : MonoBehaviour
 {
+	public Transform firePoint;
 	private float moveSpeed = 5f;
 	private Vector2 movement;
 	[SerializeField]     //Permite que se vea en Unity aunque sea privado, asi le arrastramos el objeto
@@ -32,7 +33,7 @@ public class PlayerBehaviour : MonoBehaviour
 		//Hacer que salga un proyectil al apretar el boton izquierdo del mouse.
 		if (Input.GetKeyDown(KeyCode.Mouse0))
 		{
-			Instantiate(proyectil, transform.position, transform.rotation);
+			Instantiate(proyectil, firePoint.transform.position, transform.rotation);
 			//animator.SetTrigger("OnAttack");
 		}
 	}

@@ -95,6 +95,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a13388b4253bc574ab93efc61ee3aa87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firePoint: {fileID: 4383888090272635621, guid: c81683fb013f4d14ab1c478974a766c5,
+    type: 3}
+  bullet: {fileID: 2065540498246435018}
+  Damage: 1
   rb: {fileID: -4742450286589535929}
 --- !u!50 &-4742450286589535929
 Rigidbody2D:

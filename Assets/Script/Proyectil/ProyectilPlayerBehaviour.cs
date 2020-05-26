@@ -8,7 +8,8 @@ using Vector3 = UnityEngine.Vector3;
 
 public class ProyectilPlayerBehaviour : MonoBehaviour
 {
-
+	//public Transform firePoint;
+	//public GameObject bullet;
 	public float Damage = 1f;
 	private Vector2 actualPositionMouse; 
 	private Vector2 direction;
@@ -35,6 +36,8 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 	{
 		//Se lo transforma a 3D para que funcione. 
 		transform.position += (Vector3)direction * speed * Time.deltaTime;
+
+		//Instantiate(bullet, firePoint.transform.position, firePoint.rotation);
 
 		//Para darle un tiempo de vida al proyectil y que luego se destruya de la escena EL OBJETO.
 		if (DateTime.Now > birthObject.AddSeconds(timeOfLife))
@@ -64,7 +67,7 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 
 			}
 
-
+			Destroy(gameObject);
 
 		}
 	}
