@@ -653,6 +653,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2525069733695650757, guid: 54a2edf1a89ea2240b6d9f4dacfd8cdd,
+        type: 3}
+      propertyPath: EnemyBullet
+      value: 
+      objectReference: {fileID: 8660247282609202268, guid: 99979800701a37c418dd83b3ece4942c,
+        type: 3}
+    - target: {fileID: 2525069733695650757, guid: 54a2edf1a89ea2240b6d9f4dacfd8cdd,
+        type: 3}
+      propertyPath: EnemyFirePosition
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2525069733695650758, guid: 54a2edf1a89ea2240b6d9f4dacfd8cdd,
         type: 3}
       propertyPath: m_Name

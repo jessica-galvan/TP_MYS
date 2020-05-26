@@ -16,6 +16,8 @@ public class PlayerBehaviour : MonoBehaviour
 	[SerializeField]
 	private Animator animator;
 
+	public float health = 1;
+
 	//private Vector3 actualMousePosition;
 
 
@@ -42,4 +44,23 @@ public class PlayerBehaviour : MonoBehaviour
 	{
 		rb.MovePosition((Vector2)rb.position + (movement * moveSpeed * Time.fixedDeltaTime));
 	}
+
+	public void TakeEnemyDamage(int enemyDamage)
+	{
+		health -= enemyDamage;
+		if (health < 0)
+		{
+			PlayerDie();
+		}
+
+
+
+	}
+	void PlayerDie()
+	{
+		Destroy(gameObject);
+	}
+
+
+
 }

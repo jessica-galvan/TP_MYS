@@ -5,17 +5,37 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public int health = 10;
+    float fireRate;
+    float nextFire;
 
-    // Start is called before the first frame update
+    public GameObject EnemyBullet;
+    
+
+
     void Start()
     {
-        
+        fireRate = 2f;
+        nextFire = Time.time;
     }
+
+
+         
 
     // Update is called once per frame
     void Update()
     {
         transform.position += new Vector3(0, 0.04f * Mathf.Sin(1f * Time.time));
+        CheckFire();
+    }
+
+    void CheckFire()
+    {
+        if (Time.time > nextFire)
+        {
+            Instantiate(EnemyBullet, transform.position, Quaternion.identity);
+            nextFire = Time.time + fireRate;
+        }
+
     }
 
     public void TakeDamage(int damage)
@@ -32,8 +52,10 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
         Debug.Log("im destroyed");
     }
-        
-    
+
+   
+
+
 
 
 }
