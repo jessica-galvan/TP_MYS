@@ -48,7 +48,7 @@ public class PlayerBehaviour : MonoBehaviour
 	public void TakeEnemyDamage(int enemyDamage)
 	{
 		health -= enemyDamage;
-		if (health < 0)
+		if (health <= 0)
 		{
 			PlayerDie();
 		}

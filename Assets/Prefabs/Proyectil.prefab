@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2065540498246435018}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.64, y: -1.06, z: -15}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -95,9 +95,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a13388b4253bc574ab93efc61ee3aa87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firePoint: {fileID: 4383888090272635621, guid: c81683fb013f4d14ab1c478974a766c5,
-    type: 3}
-  bullet: {fileID: 2065540498246435018}
   Damage: 1
   rb: {fileID: -4742450286589535929}
 --- !u!50 &-4742450286589535929

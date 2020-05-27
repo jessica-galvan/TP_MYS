@@ -53,7 +53,10 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 			direction = Vector2.Reflect(direction, collision.contacts[0].normal);
 			Debug.Log("Choco");
 		}
-		
+		if(collision.gameObject.CompareTag("Player"))
+		{
+			Destroy(gameObject);
+		}
     }
 
 	public void OnTriggerEnter2D(Collider2D collision)
@@ -62,9 +65,7 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 		{
 			if (enemy != null)
 			{
-
 				enemy.TakeDamage(1);
-
 			}
 
 			Destroy(gameObject);

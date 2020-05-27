@@ -8,7 +8,7 @@ public class EnemyBullet : MonoBehaviour
     public Rigidbody2D rb2;
     PlayerBehaviour target;
     new Vector2 movement;
-
+    public int enemyDamage = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -30,9 +30,16 @@ public class EnemyBullet : MonoBehaviour
         PlayerBehaviour playerdetection = collision.GetComponent<PlayerBehaviour>();
         if (playerdetection != null)
         {
-            playerdetection.TakeEnemyDamage(1);
+            playerdetection.TakeEnemyDamage(enemyDamage);
+            Destroy(gameObject);
+        }
+
+        if (collision.gameObject.CompareTag("Wall"))
+        {
             Destroy(gameObject);
         }
     }
+
+    
 
 }
