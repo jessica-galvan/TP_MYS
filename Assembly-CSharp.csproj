@@ -63,6 +63,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Samples\Cinemachine\2.5.0\Cinemachine Example Scenes\Scenes\OverTheShoulderAim\ActivateOnKeypress.cs" />
+    <Compile Include="Assets\Samples\Cinemachine\2.5.0\Cinemachine Example Scenes\Scenes\Scripting\ScriptingExample.cs" />
+    <Compile Include="Assets\Samples\Cinemachine\2.5.0\Cinemachine Example Scenes\Scenes\Trigger volumes\GenericTrigger.cs" />
+    <Compile Include="Assets\Samples\Cinemachine\2.5.0\Cinemachine Example Scenes\Shared\Models\UnityCharacter\Scripts\CharacterMovement.cs" />
+    <Compile Include="Assets\Samples\Cinemachine\2.5.0\Cinemachine Example Scenes\Shared\Models\UnityCharacter\Scripts\CharacterMovement2D.cs" />
+    <Compile Include="Assets\Samples\Cinemachine\2.5.0\Cinemachine Example Scenes\Shared\Scripts\ActivateCameraWithDistance.cs" />
+    <Compile Include="Assets\Samples\Cinemachine\2.5.0\Cinemachine Example Scenes\Shared\Scripts\ActivateCamOnPlay.cs" />
+    <Compile Include="Assets\Samples\Cinemachine\2.5.0\Cinemachine Example Scenes\Shared\Scripts\ExampleHelpWindow.cs" />
+    <Compile Include="Assets\Samples\Cinemachine\2.5.0\Cinemachine Example Scenes\Shared\Scripts\MixingCameraBlend.cs" />
+    <Compile Include="Assets\Samples\Cinemachine\2.5.0\Cinemachine Example Scenes\Shared\Scripts\PlayerMove.cs" />
+    <Compile Include="Assets\Samples\Cinemachine\2.5.0\Cinemachine Example Scenes\Shared\Scripts\PlayerMoveOnSphere.cs" />
+    <Compile Include="Assets\Samples\Cinemachine\2.5.0\Cinemachine Example Scenes\Shared\Scripts\PlayerMovePhysics.cs" />
     <Compile Include="Assets\Script\Clases Viejas\clasedos.cs" />
     <Compile Include="Assets\Script\Clases Viejas\CubeIzquierda.cs" />
     <Compile Include="Assets\Script\Clases Viejas\CubeMovement.cs" />
@@ -70,11 +82,16 @@
     <Compile Include="Assets\Script\Clases Viejas\PlatformMovement.cs" />
     <Compile Include="Assets\Script\Clases Viejas\Rotator.cs" />
     <Compile Include="Assets\Script\MovingEnemy\Enemy.cs" />
+    <Compile Include="Assets\Script\MovingEnemy\TrentEnemyBullet.cs" />
     <Compile Include="Assets\Script\Player\PlayerBehaviour.cs" />
     <Compile Include="Assets\Script\Proyectil\EnemyBullet.cs" />
     <Compile Include="Assets\Script\Proyectil\ProyectilPlayerBehaviour.cs" />
+    <Compile Include="Assets\Script\TrentEnemy.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/franc/Documents/MyS/TP_MYS/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Cinemachine">
+      <HintPath>C:/Users/franc/Documents/MyS/TP_MYS/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>C:/Users/franc/Documents/MyS/TP_MYS/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
@@ -99,6 +116,9 @@
     </Reference>
     <Reference Include="Unity.2D.Tilemap.Editor">
       <HintPath>C:/Users/franc/Documents/MyS/TP_MYS/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+      <HintPath>C:/Users/franc/Documents/MyS/TP_MYS/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>C:/Users/franc/Documents/MyS/TP_MYS/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>

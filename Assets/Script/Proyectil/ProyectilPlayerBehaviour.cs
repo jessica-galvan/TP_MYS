@@ -66,10 +66,17 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 			if (enemy != null)
 			{
 				enemy.TakeDamage(1);
+				Debug.Log("im an enemy!");
 			}
-
 			Destroy(gameObject);
 
 		}
-	}
+		TrentEnemy trent = collision.GetComponent<TrentEnemy>();
+		if (trent != null)
+		{
+			trent.TakeSecondDamage(1);
+			Debug.Log("Im the second enemy");
+		}
+		Destroy(gameObject);
+	}	
 }
