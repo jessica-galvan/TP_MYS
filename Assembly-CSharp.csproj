@@ -81,8 +81,10 @@
     <Compile Include="Assets\Script\Clases Viejas\NewScriptMove.cs" />
     <Compile Include="Assets\Script\Clases Viejas\PlatformMovement.cs" />
     <Compile Include="Assets\Script\Clases Viejas\Rotator.cs" />
+    <Compile Include="Assets\Script\MenuBehaviour.cs" />
     <Compile Include="Assets\Script\MovingEnemy\Enemy.cs" />
     <Compile Include="Assets\Script\MovingEnemy\TrentEnemy.cs" />
+    <Compile Include="Assets\Script\PauseMenuBehaviour.cs" />
     <Compile Include="Assets\Script\Player\PlayerBehaviour.cs" />
     <Compile Include="Assets\Script\Proyectil\EnemyBullet.cs" />
     <Compile Include="Assets\Script\Proyectil\ProyectilPlayerBehaviour.cs" />

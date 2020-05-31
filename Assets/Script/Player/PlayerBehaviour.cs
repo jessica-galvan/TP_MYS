@@ -23,7 +23,8 @@ public class PlayerBehaviour : MonoBehaviour
 	private Animator animator;
 	[SerializeField]
 	public float health = 1f;
-	private float timeOfAnimationAttack = 2f;
+	//private float timeOfAnimationAttack = 2f;
+	//private float timeLeftAttack;
 
 	//Raycast
 	private Vector3 actualPositionMouse;
@@ -38,6 +39,12 @@ public class PlayerBehaviour : MonoBehaviour
 
 	//Condicion de ganar
 	private bool llave;
+
+	//Screens
+	[SerializeField]
+	public GameObject DeathScreen;
+	[SerializeField]
+	public GameObject VictoryScreen;
 
 	private void Start()
 	{
@@ -69,13 +76,16 @@ public class PlayerBehaviour : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Mouse0))
 		{
 			Instantiate(proyectil, firePoint.transform.position, transform.rotation);
-			animator.SetFloat("OnAttack", 1f);
+			AttackAnimation();
+			//animator.SetFloat("OnAttack", 1f);	
 		}
 		//Cuando el jugador deja de apretar el boton, se termina la animación. HAY QUE CAMBIARLO por un timer esto. 
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
-			animator.SetFloat("OnAttack", 0);
+			//animator.SetFloat("OnAttack", 0);
 		}
+
+
 
 		//RAYCAST
 		hit2D = Physics2D.Raycast(transform.position, actualPositionMouse, rayLenght);
@@ -126,11 +136,12 @@ public class PlayerBehaviour : MonoBehaviour
 	}
 	void PlayerDie()
 	{
-		//Comente esto porque me pudri de perder cuando necesito probar cosas.
+		DeathScreen.SetActive(true);
+		Time.timeScale = 0f;
 		//Destroy(gameObject);
 	}
 
-    private void OnTriggerEnter2D(Collider2D col)
+	private void OnTriggerEnter2D(Collider2D col)
     {
 		//si la colision tiene tag Key
         if (col.gameObject.CompareTag("Key")) 
@@ -149,13 +160,27 @@ public class PlayerBehaviour : MonoBehaviour
 			//y tiene el bool llave en true
             if (llave)
             {
-				//Acá iria a la pantalla de victoria o que aparezca visualemente en el canvas
-				Debug.Log("Ganaste");
-            } else
+				VictoryScreen.SetActive(true);
+				Time.timeScale = 0f;
+			} else
             {
 				//Acá pasaria algo quizas? Un cartel que diga que falta la llave, o bueno, nada.
 				Debug.Log("No tenes la llave");
             }
+		}
+	}
+
+	private void AttackAnimation() 
+	{
+		Debug.Log("Hola");
+		float timeLeft = 2f;
+		animator.SetFloat("OnAttack", 1f);
+		timeLeft -= Time.deltaTime;	
+	
+		if (timeLeft <= 0f)
+		{
+			Debug.Log("Chau");
+			animator.SetFloat("OnAttack", 0f);
 		}
 	}
 }
