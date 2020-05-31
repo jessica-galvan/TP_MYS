@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public int health = 10;
-    float fireRate;
-    float nextFire;
-
+    [SerializeField]
+    private float health = 10f;
+    private float fireRate;
+    private float nextFire;
     public GameObject EnemyBullet;
     
 
@@ -17,9 +17,6 @@ public class Enemy : MonoBehaviour
         fireRate = 2f;
         nextFire = Time.time;
     }
-
-
-         
 
     // Update is called once per frame
     void Update()
@@ -38,7 +35,7 @@ public class Enemy : MonoBehaviour
 
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         health -= damage;
         if (health < 0)
@@ -52,10 +49,4 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
         Debug.Log("im destroyed");
     }
-
-   
-
-
-
-
 }

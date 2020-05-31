@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2525069733695650757}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Mole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -143,3 +143,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
+  EnemyBullet: {fileID: 8660247282609202268, guid: 99979800701a37c418dd83b3ece4942c,
+    type: 3}

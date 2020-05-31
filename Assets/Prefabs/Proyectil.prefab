@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8537877658726874999}
   - component: {fileID: -4742450286589535929}
   - component: {fileID: -16498857171880849}
+  - component: {fileID: 8843972576344582910}
   m_Layer: 0
   m_Name: Proyectil
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 2065540498246435018}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.64, y: -1.06, z: -15}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.5}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -95,8 +96,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a13388b4253bc574ab93efc61ee3aa87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 1
   rb: {fileID: -4742450286589535929}
+  damage: 1
+  speed: 6
 --- !u!50 &-4742450286589535929
 Rigidbody2D:
   serializedVersion: 4
@@ -128,7 +130,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -144,3 +146,14 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!210 &8843972576344582910
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065540498246435018}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 11
