@@ -11,40 +11,45 @@ using UnityEditor.Experimental.Rendering;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-	public Transform firePoint;
+	[Header("Variables")]
+	[SerializeField]
+	private float health = 1f;
+	[SerializeField]
 	private float moveSpeed = 5f;
-	private Vector2 movement;
-	private Vector2 movementDirection;
-	[SerializeField]     //Permite que se vea en Unity aunque sea privado, asi le arrastramos el objeto
+	[SerializeField]
+	private float timeLeftAttack = 2f;
+	//Raycast
+	[SerializeField]
+	private float rayLenght = 5f;
+	[SerializeField]
+	private int reflections;
+
+	[Header("Objetos")]
+	[SerializeField]
+	private Transform firePoint;
+	[SerializeField]
 	private Rigidbody2D rb;
 	[SerializeField]
 	private GameObject proyectil;
 	[SerializeField]
 	private Animator animator;
 	[SerializeField]
-	public float health = 1f;
-	//private float timeOfAnimationAttack = 2f;
-	//private float timeLeftAttack;
+	private GameObject DeathScreen;
+	[SerializeField]
+	private GameObject VictoryScreen;
 
 	//Raycast
 	private Vector3 actualPositionMouse;
 	private LineRenderer laser;
 	private RaycastHit2D hit2D;
-	[SerializeField]
-	private LayerMask layersToHit;
-	[SerializeField]
-	private float rayLenght = 5f;
-	[SerializeField]
-	private int reflections;
+	//[SerializeField]
+	//private LayerMask layersToHit;
 
-	//Condicion de ganar
+
+	//Otros
+	private Vector2 movement;
+	private Vector2 movementDirection;
 	private bool llave;
-
-	//Screens
-	[SerializeField]
-	public GameObject DeathScreen;
-	[SerializeField]
-	public GameObject VictoryScreen;
 
 	private void Start()
 	{
@@ -76,47 +81,53 @@ public class PlayerBehaviour : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Mouse0))
 		{
 			Instantiate(proyectil, firePoint.transform.position, transform.rotation);
-			AttackAnimation();
-			//animator.SetFloat("OnAttack", 1f);	
+			animator.SetFloat("OnAttack", 1f);
+			
+			//TIMER para que se cambie la animacion del ataque //NO FUNCIONA
+			timeLeftAttack -= Time.deltaTime;
+			if (timeLeftAttack <= 0f)
+			{
+				Debug.Log("Chau");
+				animator.SetFloat("OnAttack", 0f);
+				timeLeftAttack = 2f;
+			}
 		}
+		
 		//Cuando el jugador deja de apretar el boton, se termina la animación. HAY QUE CAMBIARLO por un timer esto. 
-        if (Input.GetKeyUp(KeyCode.Mouse0))
-        {
-			//animator.SetFloat("OnAttack", 0);
+		if (Input.GetKeyUp(KeyCode.Mouse0))
+		{
+			animator.SetFloat("OnAttack", 0);
 		}
-
-
 
 		//RAYCAST
 		hit2D = Physics2D.Raycast(transform.position, actualPositionMouse, rayLenght);
-		float remainingLenght = rayLenght;
-		var ray = new Ray(transform.position, transform.right); //ver que onda acá
-		
-		if (hit2D)
-		{
-			laser.positionCount = 1;
-			laser.SetPosition(0, transform.position);
-			//laser.sortingOrder = 4;
-			//laser.sortingLayerName = "UI";
+			float remainingLenght = rayLenght;
+			var ray = new Ray(transform.position, transform.right); //ver que onda acá
 
-			for (int i = 0; i < reflections; i++) 
+			if (hit2D)
 			{
-				
-				laser.positionCount += 1;
-				laser.SetPosition(laser.positionCount - 1, hit2D.point);
-				remainingLenght -= Vector2.Distance(ray.origin, hit2D.point);
-				ray = new Ray(hit2D.point, Vector2.Reflect(ray.direction, hit2D.normal));
-				//Debug.Log("Hola " + i);
-                //if (laser){ Debug.Log("Chau" + i + laser.positionCount); }
-			}
-		} /*else
-        {
-			laser.positionCount += 1;
-			laser.SetPosition(laser.positionCount - 1, ray.origin + ray.direction * remainingLenght);
-        }*/
-	}
+				laser.positionCount = 1;
+				laser.SetPosition(0, transform.position);
+				//laser.sortingOrder = 4;
+				//laser.sortingLayerName = "UI";
 
-	private void FixedUpdate()
+				for (int i = 0; i < reflections; i++)
+				{
+
+					laser.positionCount += 1;
+					laser.SetPosition(laser.positionCount - 1, hit2D.point);
+					remainingLenght -= Vector2.Distance(ray.origin, hit2D.point);
+					ray = new Ray(hit2D.point, Vector2.Reflect(ray.direction, hit2D.normal));
+					//Debug.Log("Hola " + i);
+					//if (laser){ Debug.Log("Chau" + i + laser.positionCount); }
+				}
+			} /*else
+			{
+				laser.positionCount += 1;
+				laser.SetPosition(laser.positionCount - 1, ray.origin + ray.direction * remainingLenght);
+			}*/
+	}
+	public void FixedUpdate()
 	{
 		rb.MovePosition((Vector2)rb.position + (movement * moveSpeed * Time.fixedDeltaTime));
 
@@ -141,10 +152,10 @@ public class PlayerBehaviour : MonoBehaviour
 		//Destroy(gameObject);
 	}
 
-	private void OnTriggerEnter2D(Collider2D col)
-    {
+	public void OnTriggerEnter2D(Collider2D col)
+	{
 		//si la colision tiene tag Key
-        if (col.gameObject.CompareTag("Key")) 
+		if (col.gameObject.CompareTag("Key"))
 		{
 			Debug.Log("Obtuviste una llave");
 			//Cambiame el bool a true
@@ -158,29 +169,16 @@ public class PlayerBehaviour : MonoBehaviour
 		if (col.gameObject.CompareTag("Door"))
 		{
 			//y tiene el bool llave en true
-            if (llave)
-            {
+			if (llave)
+			{
 				VictoryScreen.SetActive(true);
 				Time.timeScale = 0f;
-			} else
-            {
+			}
+			else
+			{
 				//Acá pasaria algo quizas? Un cartel que diga que falta la llave, o bueno, nada.
 				Debug.Log("No tenes la llave");
-            }
-		}
-	}
-
-	private void AttackAnimation() 
-	{
-		Debug.Log("Hola");
-		float timeLeft = 2f;
-		animator.SetFloat("OnAttack", 1f);
-		timeLeft -= Time.deltaTime;	
-	
-		if (timeLeft <= 0f)
-		{
-			Debug.Log("Chau");
-			animator.SetFloat("OnAttack", 0f);
+			}
 		}
 	}
 }

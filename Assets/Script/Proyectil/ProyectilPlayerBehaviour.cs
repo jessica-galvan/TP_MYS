@@ -46,12 +46,9 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 	}
 
 	void Update()
-	{
-		
+	{	
 		//Se lo transforma a 3D para que funcione. 
 		transform.position += (Vector3)direction * speed * Time.deltaTime;
-
-		//Instantiate(bullet, firePoint.transform.position, firePoint.rotation);
 
 		//Para darle un tiempo de vida al proyectil y que luego se destruya de la escena EL OBJETO.
 		if (DateTime.Now > birthObject.AddSeconds(timeOfLife))
@@ -62,6 +59,7 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 	//hacemos que cuando entra en collision con una pared, refleje. 
 	private void OnCollisionEnter2D(Collision2D collision)
     {
+		//NO FUNCIONA LUEGO DE QUE EL PROYETIL SE HIZO TRIGGER
 		if(collision.gameObject.CompareTag("Wall"))
         {
 			direction = Vector2.Reflect(direction, collision.contacts[0].normal);
@@ -72,14 +70,9 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 		}
     }
 
-	private void drawLine()
-	{
-
-	}
-
 	public void OnTriggerEnter2D(Collider2D collision)
 	{
-
+		//NO FUNCIONA EL REBOTE, NO SE SABE PORQUE TODAVIA, problema de haberlo pasado a Trigger
 		ContactPoint2D[] contacts = new ContactPoint2D[2];
 		//si chocas contra una pared, rebota
 		if (collision.gameObject.CompareTag("Wall"))
@@ -88,7 +81,7 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 			direction = Vector2.Reflect(direction, normal);
 		}
 
-
+		//ESTO SI FUNCIONA
 		//antes de hacer el get component, hagamos que chequee con que collisiona. Dependiendo del tag que tenga, hace una cosa o la otra.
 		if (collision.gameObject.tag == "Mole")
 		{
@@ -103,6 +96,8 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 			Destroy(gameObject);
 		}
 
+
+		//FRANCO hizo esto.
 		/*Enemy enemy = collision.GetComponent<Enemy>();
 		{
 			if (enemy)
