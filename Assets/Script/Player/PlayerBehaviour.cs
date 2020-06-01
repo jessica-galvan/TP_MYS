@@ -233,8 +233,10 @@ public class PlayerBehaviour : MonoBehaviour
 		//Colleciona monedas
 		if (col.gameObject.CompareTag("collectable"))
 		{
-			coins += 1;
 			var coin = col.gameObject;
+			scoreScript.coins += 1;
+			//coins += 1;
+			//var coin = col.gameObject;
 			Destroy(coin);
 		}
 	}

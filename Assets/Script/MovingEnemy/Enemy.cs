@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += new Vector3(0, 0.04f * Mathf.Sin(1f * Time.time));
+        transform.position += new Vector3(0, 0.05f * Mathf.Sin(1f * Time.time));
         CheckFire();
     }
 
