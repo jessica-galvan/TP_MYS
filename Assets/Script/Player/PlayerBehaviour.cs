@@ -78,9 +78,9 @@ public class PlayerBehaviour : MonoBehaviour
 		actualPositionMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
 		//Hacer que salga un proyectil al apretar el boton izquierdo del mouse, e inicia la animacion del ataque
-		if (Input.GetKeyDown(KeyCode.Mouse0))
+		if (Input.GetButtonDown("Fire1"))
 		{
-			Instantiate(proyectil, firePoint.transform.position, transform.rotation);
+			//Instantiate(proyectil, firePoint.transform.position, transform.rotation);
 			animator.SetFloat("OnAttack", 1f);
 			
 			//TIMER para que se cambie la animacion del ataque //NO FUNCIONA
@@ -94,15 +94,17 @@ public class PlayerBehaviour : MonoBehaviour
 		}
 		
 		//Cuando el jugador deja de apretar el boton, se termina la animación. HAY QUE CAMBIARLO por un timer esto. 
-		if (Input.GetKeyUp(KeyCode.Mouse0))
+		if (Input.GetButtonUp("Fire1"))
 		{
+			Instantiate(proyectil, firePoint.transform.position, transform.rotation);
 			animator.SetFloat("OnAttack", 0);
 		}
 
 		//RAYCAST
 		hit2D = Physics2D.Raycast(transform.position, actualPositionMouse, rayLenght);
 			float remainingLenght = rayLenght;
-			var ray = new Ray(transform.position, transform.right); //ver que onda acá
+			var ray = new Ray(transform.position, transform.right);
+		    Debug.DrawRay(transform.position, transform.right *100, Color.red);//ver que onda acá
 
 			if (hit2D)
 			{
