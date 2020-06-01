@@ -9,6 +9,7 @@ TagManager:
   - Trent
   - Key
   - Door
+  - collectable
   layers:
   - Default
   - TransparentFX
