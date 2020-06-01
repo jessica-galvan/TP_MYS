@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -9,7 +10,7 @@ public class Enemy : MonoBehaviour
     private float fireRate;
     private float nextFire;
     public GameObject EnemyBullet;
-    
+    public Animator animatorMole;
 
 
     void Start()
@@ -21,7 +22,9 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         transform.position += new Vector3(0, 0.05f * Mathf.Sin(1f * Time.time));
+        animatorMole.SetBool("Walking", true);
         CheckFire();
     }
 
@@ -40,13 +43,16 @@ public class Enemy : MonoBehaviour
         health -= damage;
         if (health < 0)
         {
+            
             Die();
         }
     }
 
     void Die()
     {
-        Destroy(gameObject);
-        Debug.Log("im destroyed");
+        animatorMole.SetBool("Die", true);
+        Destroy(gameObject, 1f);
     }
+    
+
 }
