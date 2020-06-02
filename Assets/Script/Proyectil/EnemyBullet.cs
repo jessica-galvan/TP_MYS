@@ -7,7 +7,7 @@ public class EnemyBullet : MonoBehaviour
     public float speed = 7f;
     public Rigidbody2D rb2;
     PlayerBehaviour target;
-    new Vector2 movement;
+    private Vector2 movement;
     public int enemyDamage = 1;
 
     // Start is called before the first frame update
@@ -17,12 +17,6 @@ public class EnemyBullet : MonoBehaviour
         target = GameObject.FindObjectOfType<PlayerBehaviour>();
         movement = (target.transform.position - transform.position).normalized * speed;
         rb2.velocity = new Vector2(movement.x, movement.y);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -7,13 +7,14 @@ using Vector3 = UnityEngine.Vector3;
 using Vector2 = UnityEngine.Vector3;
 using System.Threading;
 using UnityEditor.Experimental.Rendering;
+using UnityEngine.SocialPlatforms.Impl;
 //using Quaternion = UnityEngine.Quaternion;
 
 public class PlayerBehaviour : MonoBehaviour
 {
 	[Header("Variables")]
 	[SerializeField]
-	private float health = 1f;
+	private int health = 3;
 	[SerializeField]
 	private float moveSpeed = 5f;
 	[SerializeField]
@@ -41,6 +42,8 @@ public class PlayerBehaviour : MonoBehaviour
 	private GameObject DeathScreen;
 	[SerializeField]
 	private GameObject VictoryScreen;
+	[SerializeField]
+	private GameObject HUD;
 
 	//Raycast
 	private Vector3 actualPositionMouse;
@@ -53,6 +56,7 @@ public class PlayerBehaviour : MonoBehaviour
 	private Vector2 movement;
 	private Vector2 movementDirection;
 	private bool llave;
+
 	//Timer cooldown
 	private bool canMove = true;
 	private bool canAttack = true;
@@ -183,9 +187,10 @@ public class PlayerBehaviour : MonoBehaviour
 		rb.rotation = angle;*/
 	}
 
-	public void TakeEnemyDamage(float enemyDamage)
+	public void TakeEnemyDamage(int enemyDamage)
 	{
 		health -= enemyDamage;
+		scoreScript.health = health;
 		if (health <= 0)
 		{
             if (canDie)
@@ -197,6 +202,7 @@ public class PlayerBehaviour : MonoBehaviour
 	void PlayerDie()
 	{
 		DeathScreen.SetActive(true);
+		HUD.SetActive(false);
 		Time.timeScale = 0f;
 		//Destroy(gameObject);
 	}
@@ -209,6 +215,7 @@ public class PlayerBehaviour : MonoBehaviour
 			Debug.Log("Obtuviste una llave");
 			//Cambiame el bool a true
 			llave = true;
+			scoreScript.llave= true;
 			//y borrame el objeto llave de la escena
 			var objeto = col.gameObject;
 			Destroy(objeto);
@@ -221,6 +228,7 @@ public class PlayerBehaviour : MonoBehaviour
 			if (llave)
 			{
 				VictoryScreen.SetActive(true);
+				HUD.SetActive(false);
 				Time.timeScale = 0f;
 			}
 			else
@@ -230,13 +238,11 @@ public class PlayerBehaviour : MonoBehaviour
 			}
 		}
 
-		//Colleciona monedas
+		//Colecciona monedas
 		if (col.gameObject.CompareTag("collectable"))
 		{
 			var coin = col.gameObject;
 			scoreScript.coins += 1;
-			//coins += 1;
-			//var coin = col.gameObject;
 			Destroy(coin);
 		}
 	}

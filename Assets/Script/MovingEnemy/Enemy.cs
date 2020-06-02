@@ -6,12 +6,11 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
-    private float health = 10f;
+    private int health = 10;
     private float fireRate;
     private float nextFire;
     public GameObject EnemyBullet;
     public Animator animatorMole;
-
 
     void Start()
     {
@@ -32,13 +31,14 @@ public class Enemy : MonoBehaviour
     {
         if (Time.time > nextFire)
         {
+            //animatorMole.SetTrigger("Attack");
             Instantiate(EnemyBullet, transform.position, Quaternion.identity);
             nextFire = Time.time + fireRate;
         }
 
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
         health -= damage;
         if (health < 0)

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TrentEnemy : MonoBehaviour
 {
-    public float health = 10f;
+    public int health = 10;
     float fireRate;
     float nextFire;
     public GameObject enemyTrentBullet;
@@ -41,7 +41,7 @@ public class TrentEnemy : MonoBehaviour
 
     }    
 
-    public void TakeSecondDamage(float damage)
+    public void TakeSecondDamage(int damage)
     {
         health -= damage;
         if (health <= 0)

@@ -18,7 +18,7 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 	[SerializeField]
 	private Rigidbody2D rb;
 	[SerializeField]
-	public float damage = 1f;
+	public int damage = 1;
 	[SerializeField]
 	private float speed = 6f;
 
