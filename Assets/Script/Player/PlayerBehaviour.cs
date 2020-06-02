@@ -30,8 +30,8 @@ public class PlayerBehaviour : MonoBehaviour
 	private int coins = 0;
 
 	[Header("Objetos")]
-	[SerializeField]
-	private Transform firePoint;
+	//[SerializeField]
+	//private Transform firePoint;
 	[SerializeField]
 	private Rigidbody2D rb;
 	[SerializeField]
@@ -67,6 +67,8 @@ public class PlayerBehaviour : MonoBehaviour
 	private bool canAnimateAttack = false;
 	private float timerAnimation;
 	private float extendAnimation = 1f;
+	
+
 
 	private void Start()
 	{
@@ -74,11 +76,16 @@ public class PlayerBehaviour : MonoBehaviour
 		llave = false;
 		timer = cooldownAttack;
 		canDie = true;
+		
 	}
 
 	void Update()
 	{
-        //Capta movimientos Horizontales y Verticales. 
+		//GameObject bulletTrail = Instantiate(proyectil);
+		//bulletTrail.transform.position = firePoint.position;
+		//bulletTrail.transform.right = firePoint.right;
+
+		//Capta movimientos Horizontales y Verticales. 
 		movement.x = Input.GetAxisRaw("Horizontal");
 		movement.y = Input.GetAxisRaw("Vertical");
 		movementDirection = new Vector2(movement.x, movement.y);
@@ -102,11 +109,12 @@ public class PlayerBehaviour : MonoBehaviour
 			animator.SetFloat("OnAttack", 1f);
 			//acá tendria que hacer el raycast y line renderer para ver como va a ir el tiro que quiere hacer.  y que solo aparezca mientras se matiene apretado/down. Cuando va a up desaparece
 		}
-		
+
 		//Cuando el jugador deja de apretar el boton, se termina la animación. 
 		if (Input.GetButtonUp("Fire1") && canAttack)
 		{
-			Instantiate(proyectil, firePoint.transform.position, transform.rotation);
+			
+			Instantiate(proyectil, transform.position + transform.right, transform.rotation);
 			canMove = true;
 			//Start cooldown attack
 			canCount = true;
@@ -245,5 +253,6 @@ public class PlayerBehaviour : MonoBehaviour
 			scoreScript.coins += 1;
 			Destroy(coin);
 		}
+		
 	}
 }

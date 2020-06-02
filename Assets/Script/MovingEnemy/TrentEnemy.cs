@@ -14,6 +14,7 @@ public class TrentEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //var oldPosition = transform.position += new Vector3(0.04f * Mathf.Sin(1f * Time.time), 0);
         fireRate = 2f;
         nextFire = Time.time;
     }
@@ -22,11 +23,9 @@ public class TrentEnemy : MonoBehaviour
     void Update()
     {
        
-        
         trentAnimator.SetBool("Walk", true);
         transform.position += new Vector3(0.04f * Mathf.Sin(1f * Time.time), 0);
-        
-        
+       
         CheckTrentFire();
         
     }

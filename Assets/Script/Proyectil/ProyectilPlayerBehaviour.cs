@@ -25,6 +25,7 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 	//Objetos que busca internamente
 	private GameObject enemy;
 	private GameObject player;
+	
 
 	void Awake()
 	{

@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 2065540498246435061}
   - component: {fileID: 8537877658726874999}
   - component: {fileID: -4742450286589535929}
-  - component: {fileID: -16498857171880849}
   - component: {fileID: 8843972576344582910}
+  - component: {fileID: 3127021407709062942}
   m_Layer: 0
   m_Name: Proyectil
   m_TagString: Untagged
@@ -99,6 +99,8 @@ MonoBehaviour:
   rb: {fileID: -4742450286589535929}
   damage: 1
   speed: 6
+  firePoint: {fileID: 4383888090272635620, guid: c81683fb013f4d14ab1c478974a766c5,
+    type: 3}
 --- !u!50 &-4742450286589535929
 Rigidbody2D:
   serializedVersion: 4
@@ -120,8 +122,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &-16498857171880849
-BoxCollider2D:
+--- !u!210 &8843972576344582910
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065540498246435018}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 11
+--- !u!58 &3127021407709062942
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -134,26 +147,5 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.32, y: 0.35}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
---- !u!210 &8843972576344582910
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2065540498246435018}
-  m_Enabled: 1
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 11
+  m_Radius: 0.7856831
