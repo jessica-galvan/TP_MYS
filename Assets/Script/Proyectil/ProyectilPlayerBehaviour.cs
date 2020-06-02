@@ -23,7 +23,6 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 	private float speed = 6f;
 
 	//Objetos que busca internamente
-	private GameObject enemy;
 	private GameObject player;
 	
 
@@ -35,7 +34,7 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 		//Guardame el tiempo en el que fue creado
 		birthObject = DateTime.Now;
 
-		//Busca al plater
+		//Busca al player
 		player = GameObject.Find("Player");
 
 		//Calculame el vector de donde sale a donde va.

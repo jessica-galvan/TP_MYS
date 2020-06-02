@@ -8,6 +8,7 @@ using Vector2 = UnityEngine.Vector3;
 using System.Threading;
 using UnityEditor.Experimental.Rendering;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEditor.Experimental.GraphView;
 //using Quaternion = UnityEngine.Quaternion;
 
 public class PlayerBehaviour : MonoBehaviour
@@ -49,10 +50,12 @@ public class PlayerBehaviour : MonoBehaviour
 	private Vector3 actualPositionMouse;
 	private LineRenderer laser;
 	private RaycastHit2D hit2D;
+	private RaycastHit2D[] hits;
 	//[SerializeField]
 	//private LayerMask layersToHit;
 
 	//Otros
+	private Vector2 directionProyectil;
 	private Vector2 movement;
 	private Vector2 movementDirection;
 	private bool llave;
@@ -66,9 +69,6 @@ public class PlayerBehaviour : MonoBehaviour
 	private bool canCount2 = false;
 	private bool canAnimateAttack = false;
 	private float timerAnimation;
-	private float extendAnimation = 1f;
-	
-
 
 	private void Start()
 	{
@@ -95,9 +95,10 @@ public class PlayerBehaviour : MonoBehaviour
 		{
 			animator.SetFloat("Horizontal", movement.x);
 			animator.SetFloat("Vertical", movement.y);
+			directionProyectil = new Vector2(movement.x, movement.y);
 		}
 		animator.SetFloat("Speed", movement.sqrMagnitude);
-
+		
 		//MOUSE POSITION
 		actualPositionMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -113,8 +114,18 @@ public class PlayerBehaviour : MonoBehaviour
 		//Cuando el jugador deja de apretar el boton, se termina la animación. 
 		if (Input.GetButtonUp("Fire1") && canAttack)
 		{
-			
-			Instantiate(proyectil, transform.position + transform.right, transform.rotation);
+
+            //Instantiate(proyectil, transform.position + transform.right, transform.rotation);
+            if (directionProyectil == Vector2.zero)
+            {
+				//directionProyectil = transform.position + transform.right;
+            }
+
+			Instantiate(proyectil, transform.position + directionProyectil, transform.rotation);
+
+			Debug.Log("direction: " + directionProyectil);
+			Debug.Log("position: " + transform.position);
+
 			canMove = true;
 			//Start cooldown attack
 			canCount = true;
@@ -128,18 +139,22 @@ public class PlayerBehaviour : MonoBehaviour
 
 		//RAYCAST
 		hit2D = Physics2D.Raycast(transform.position, actualPositionMouse, rayLenght);
-		float remainingLenght = rayLenght;
-		var ray = new Ray(transform.position, transform.right);
 		Debug.DrawRay(transform.position, transform.right *100, Color.red);//ver que onda acá
 
 		if (hit2D)
 		{
-			laser.positionCount = 1;
-			laser.SetPosition(0, transform.position);
-			//laser.sortingOrder = 4;
-			//laser.sortingLayerName = "UI";
+			Vector2 newPoint = hit2D.point;
+			Vector2 oldPoint = transform.position;
 
 			for (int i = 0; i < reflections; i++)
+			{
+				var hit = Physics2D.Raycast(oldPoint, newPoint, rayLenght);
+				oldPoint = newPoint;
+				newPoint = hit.point;
+			}
+
+
+			/*for (int i = 0; i < reflections; i++)
 			{
 
 				laser.positionCount += 1;
@@ -148,7 +163,7 @@ public class PlayerBehaviour : MonoBehaviour
 				ray = new Ray(hit2D.point, Vector2.Reflect(ray.direction, hit2D.normal));
 				//Debug.Log("Hola " + i);
 				//if (laser){ Debug.Log("Chau" + i + laser.positionCount); }
-			}
+			}*/
 		} 
 		/*else
 		{
