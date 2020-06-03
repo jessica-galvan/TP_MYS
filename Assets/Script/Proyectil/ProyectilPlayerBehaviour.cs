@@ -13,7 +13,8 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 	private Vector2 direction;
 	private DateTime birthObject;
 	private double timeOfLife = 3; //porque el AddSeconds lo pide como doble. 
-	
+	public LineRenderer line;
+
 	//Objetos que hay que asignar
 	[SerializeField]
 	private Rigidbody2D rb;
@@ -36,7 +37,7 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 
 		//Busca al player
 		player = GameObject.Find("Player");
-
+		
 		//Calculame el vector de donde sale a donde va.
 		direction = (Vector3)actualPositionMouse - player.transform.position;
 		direction.Normalize();
@@ -85,6 +86,7 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 		//antes de hacer el get component, hagamos que chequee con que collisiona. Dependiendo del tag que tenga, hace una cosa o la otra.
 		if (collision.gameObject.tag == "Mole")
 		{
+			
 			Enemy mole = collision.GetComponent<Enemy>();
 			mole.TakeDamage(damage);
 			Destroy(gameObject);

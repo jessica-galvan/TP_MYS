@@ -92,6 +92,7 @@
     <Compile Include="Assets\Script\Proyectil\ProyectilPlayerBehaviour.cs" />
     <Compile Include="Assets\Script\Proyectil\TrentEnemyBullet.cs" />
     <Compile Include="Assets\Script\scoreScript.cs" />
+    <Compile Include="Assets\soundManagerScript.cs" />
     <Compile Include="Assets\testScript.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/franc/Documents/MyS/TP_MYS/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

@@ -13,8 +13,20 @@ using UnityEditor;
 using UnityEngine.UIElements;
 //using Quaternion = UnityEngine.Quaternion;
 
+	[RequireComponent(typeof(LineRenderer))]
+
 public class PlayerBehaviour : MonoBehaviour
 {
+	public int Reflections;
+	public float maxLenght;
+
+
+	private LineRenderer myLineRenderer;
+	private Ray myRay;
+	private RaycastHit myHit;
+	private Vector3 myDirection;
+	public Transform player;
+
 	[Header("Variables")]
 	[SerializeField]
 	private int health = 3;
@@ -74,11 +86,17 @@ public class PlayerBehaviour : MonoBehaviour
 
 	private void Start()
 	{
-		laser = GetComponent<LineRenderer>();
+		//laser = GetComponent<LineRenderer>();
 		llave = false;
 		timer = cooldownAttack;
 		canDie = true;
 		directionProyectil = transform.position + transform.right;	
+	}
+
+	private void Awake()
+	{
+		myLineRenderer = GetComponent<LineRenderer>();
+
 	}
 
 	void Update()
@@ -100,7 +118,31 @@ public class PlayerBehaviour : MonoBehaviour
 			directionProyectil = new Vector2(movement.x, movement.y);
 		}
 		animator.SetFloat("Speed", movement.sqrMagnitude);
-		
+
+
+		myRay = new Ray(transform.position, actualPositionMouse);
+		myLineRenderer.positionCount = 1;
+		myLineRenderer.SetPosition(0, player.transform.position);
+		float remainingLenght = maxLenght;
+
+		/*for (int i = 0; i < Reflections; i++)
+		{
+			if (Physics.Raycast(myRay.origin, myRay.direction, out myHit, remainingLenght))
+			{
+				myLineRenderer.positionCount += 1;
+				myLineRenderer.SetPosition(myLineRenderer.positionCount - 1, myHit.point);
+				remainingLenght -= Vector3.Distance(myRay.origin, myHit.point);
+				myRay = new Ray(myHit.point, Vector3.Reflect(myRay.direction, myHit.normal));
+				if (myHit.collider.tag != "Mole")
+					break;
+			}
+			else
+			{
+				myLineRenderer.positionCount += 1;
+				myLineRenderer.SetPosition(myLineRenderer.positionCount - 1, myRay.origin + myRay.direction * remainingLenght);
+			}
+		}*/
+
 		//Mouse Position
 		actualPositionMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -111,11 +153,34 @@ public class PlayerBehaviour : MonoBehaviour
 			canMove = false;
 			animator.SetFloat("OnAttack", 1f);
 
+
+
+			for (int i = 0; i < Reflections; i++)
+			{
+				if (Physics.Raycast(myRay.origin, myRay.direction, out myHit, remainingLenght))
+				{
+					myLineRenderer.positionCount += 1;
+					myLineRenderer.SetPosition(myLineRenderer.positionCount - 1, myHit.point);
+					remainingLenght -= Vector3.Distance(myRay.origin, myHit.point);
+					myRay = new Ray(myHit.point, Vector3.Reflect(myRay.direction, myHit.normal));
+					if (myHit.collider.tag != "Mole")
+						break;
+				}
+				else
+				{
+					myLineRenderer.positionCount += 1;
+					myLineRenderer.SetPosition(myLineRenderer.positionCount - 1, myRay.origin + myRay.direction * remainingLenght);
+				}
+			}
+
+
+
+
 			//ACA IRIA EL RAYCAST Y LINERENDERER SI FUNCIONARAAAAAAAAAAAAAAAAAAAA
 		}
 
 		//RAYCAST & LINERENDERER
-		CastLaser(transform.position, actualPositionMouse, directionProyectil);
+		//CastLaser(transform.position, actualPositionMouse, directionProyectil);
 
 		//Cuando el jugador deja de apretar el boton, se termina la animación. 
 		if (Input.GetButtonUp("Fire1") && canAttack)
@@ -240,6 +305,7 @@ public class PlayerBehaviour : MonoBehaviour
 			//y tiene el bool llave en true
 			if (llave)
 			{
+				
 				VictoryScreen.SetActive(true);
 				HUD.SetActive(false);
 				Time.timeScale = 0f;
@@ -254,7 +320,10 @@ public class PlayerBehaviour : MonoBehaviour
 		//Colecciona monedas
 		if (col.gameObject.CompareTag("collectable"))
 		{
+			
+
 			var coin = col.gameObject;
+			soundManagerScript.PlaySound("PickKey");
 			scoreScript.coins += 1;
 			Destroy(coin);
 		}
