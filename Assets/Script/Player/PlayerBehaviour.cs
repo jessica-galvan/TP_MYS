@@ -9,6 +9,8 @@ using System.Threading;
 using UnityEditor.Experimental.Rendering;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor;
+using UnityEngine.UIElements;
 //using Quaternion = UnityEngine.Quaternion;
 
 public class PlayerBehaviour : MonoBehaviour
@@ -20,15 +22,15 @@ public class PlayerBehaviour : MonoBehaviour
 	private float moveSpeed = 5f;
 	[SerializeField]
 	private float cooldownAttack = 5f;
+	[SerializeField]
+	private bool canDie;
+	[SerializeField]
+	private int coins = 0;
 	//Raycast
 	[SerializeField]
 	private float rayLenght = 5f;
 	[SerializeField]
 	private int reflections;
-	[SerializeField]
-	private bool canDie;
-	[SerializeField]
-	private int coins = 0;
 
 	[Header("Objetos")]
 	//[SerializeField]
@@ -48,11 +50,10 @@ public class PlayerBehaviour : MonoBehaviour
 
 	//Raycast
 	private Vector3 actualPositionMouse;
-	private LineRenderer laser;
 	private RaycastHit2D hit2D;
-	private RaycastHit2D[] hits;
-	//[SerializeField]
-	//private LayerMask layersToHit;
+	private LineRenderer laser;
+	[SerializeField]
+	private LayerMask layersToHit;
 
 	//Otros
 	private Vector2 directionProyectil;
@@ -65,6 +66,7 @@ public class PlayerBehaviour : MonoBehaviour
 	private bool canAttack = true;
 	private bool canCount = false;
 	private float timer;
+
 	//Timer Animation
 	private bool canCount2 = false;
 	private bool canAnimateAttack = false;
@@ -76,7 +78,7 @@ public class PlayerBehaviour : MonoBehaviour
 		llave = false;
 		timer = cooldownAttack;
 		canDie = true;
-		
+		directionProyectil = transform.position + transform.right;	
 	}
 
 	void Update()
@@ -99,7 +101,7 @@ public class PlayerBehaviour : MonoBehaviour
 		}
 		animator.SetFloat("Speed", movement.sqrMagnitude);
 		
-		//MOUSE POSITION
+		//Mouse Position
 		actualPositionMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
 		//Hacer que salga un proyectil al apretar el boton izquierdo del mouse, e inicia la animacion del ataque
@@ -108,24 +110,17 @@ public class PlayerBehaviour : MonoBehaviour
 			//canMove es para que no se pueda mover mientras este apretando el mouse.
 			canMove = false;
 			animator.SetFloat("OnAttack", 1f);
-			//acá tendria que hacer el raycast y line renderer para ver como va a ir el tiro que quiere hacer.  y que solo aparezca mientras se matiene apretado/down. Cuando va a up desaparece
+
+			//ACA IRIA EL RAYCAST Y LINERENDERER SI FUNCIONARAAAAAAAAAAAAAAAAAAAA
 		}
+
+		//RAYCAST & LINERENDERER
+		CastLaser(transform.position, actualPositionMouse, directionProyectil);
 
 		//Cuando el jugador deja de apretar el boton, se termina la animación. 
 		if (Input.GetButtonUp("Fire1") && canAttack)
 		{
-
-            //Instantiate(proyectil, transform.position + transform.right, transform.rotation);
-            if (directionProyectil == Vector2.zero)
-            {
-				//directionProyectil = transform.position + transform.right;
-            }
-
-			Instantiate(proyectil, transform.position + directionProyectil, transform.rotation);
-
-			Debug.Log("direction: " + directionProyectil);
-			Debug.Log("position: " + transform.position);
-
+   			Instantiate(proyectil, transform.position + directionProyectil, transform.rotation);
 			canMove = true;
 			//Start cooldown attack
 			canCount = true;
@@ -136,43 +131,9 @@ public class PlayerBehaviour : MonoBehaviour
 			canAnimateAttack = true;
 			canCount2 = true;
 		}
-
-		//RAYCAST
-		hit2D = Physics2D.Raycast(transform.position, actualPositionMouse, rayLenght);
-		Debug.DrawRay(transform.position, transform.right *100, Color.red);//ver que onda acá
-
-		if (hit2D)
-		{
-			Vector2 newPoint = hit2D.point;
-			Vector2 oldPoint = transform.position;
-
-			for (int i = 0; i < reflections; i++)
-			{
-				var hit = Physics2D.Raycast(oldPoint, newPoint, rayLenght);
-				oldPoint = newPoint;
-				newPoint = hit.point;
-			}
-
-
-			/*for (int i = 0; i < reflections; i++)
-			{
-
-				laser.positionCount += 1;
-				laser.SetPosition(laser.positionCount - 1, hit2D.point);
-				remainingLenght -= Vector2.Distance(ray.origin, hit2D.point);
-				ray = new Ray(hit2D.point, Vector2.Reflect(ray.direction, hit2D.normal));
-				//Debug.Log("Hola " + i);
-				//if (laser){ Debug.Log("Chau" + i + laser.positionCount); }
-			}*/
-		} 
-		/*else
-		{
-		laser.positionCount += 1;
-		laser.SetPosition(laser.positionCount - 1, ray.origin + ray.direction * remainingLenght);
-		}*/
-
+		
 		//El timer del cooldown para el ataque
-		if(timer>= 0.0f && canCount)
+		if (timer>= 0.0f && canCount)
 		{
 			timer -= Time.deltaTime;
 		}
@@ -202,7 +163,6 @@ public class PlayerBehaviour : MonoBehaviour
         {
 			rb.MovePosition((Vector2)rb.position + (movement * moveSpeed * Time.fixedDeltaTime));
 		}
-		
 
 		//Para obtener la direccion a cual mirar segun donde este el mouse. NO BORRAR
 		/*Vector2 lookDir = (Vector2)actualPositionMouse - (Vector2)rb.position;
@@ -227,10 +187,40 @@ public class PlayerBehaviour : MonoBehaviour
 		DeathScreen.SetActive(true);
 		HUD.SetActive(false);
 		Time.timeScale = 0f;
-		//Destroy(gameObject);
 	}
 
-	public void OnTriggerEnter2D(Collider2D col)
+	void CastLaser(Vector2 position, Vector2 direction, Vector2 offset) 
+	{
+		for (int i = 0; i < reflections; i++)
+		{
+			Debug.Log("Hola " + i);
+			//Ray ray = new Ray (position, direction);
+			hit2D = Physics2D.Raycast(position + offset, direction, rayLenght, layersToHit);
+			//laser.positionCount += 1;
+			//laser.SetPosition(laser.positionCount - 1, hit2D.point);
+
+			//EHHH... 
+			//var remainingLenght -= Vector2.Distance(ray.origin, hit2D.point);
+			
+			if (hit2D)
+			{
+				//Debug.DrawLine(position, hit2D.point, Color.red);
+				//Debug.DrawRay(position, direction * rayLenght, Color.red);
+				position = hit2D.point;
+				direction = hit2D.normal;
+			} 
+			else
+            {
+				Debug.DrawRay(position, direction * rayLenght, Color.blue);
+				//laser.positionCount += 1;
+				//laser.SetPosition(laser.positionCount - 1, position + offset + direction);
+				//laser.SetPosition(laser.positionCount - 1, position + offset + direction * remainingLenght);
+				break;
+			}
+		}
+	}
+
+		public void OnTriggerEnter2D(Collider2D col)
 	{
 		//si la colision tiene tag Key
 		if (col.gameObject.CompareTag("Key"))

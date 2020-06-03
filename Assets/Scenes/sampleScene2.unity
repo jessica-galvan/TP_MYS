@@ -777,9 +777,9 @@ RectTransform:
   m_Father: {fileID: 438032144}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -225}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 800, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &223295183
@@ -1053,10 +1053,10 @@ MonoBehaviour:
   health: 3
   moveSpeed: 5
   cooldownAttack: 2
-  rayLenght: 500
-  reflections: 3
   canDie: 0
   coins: 0
+  rayLenght: 500
+  reflections: 3
   rb: {fileID: 326734957}
   proyectil: {fileID: 2065540498246435018, guid: 054801f046b4f2449b20d4c3e98b9afa,
     type: 3}
@@ -1064,6 +1064,9 @@ MonoBehaviour:
   DeathScreen: {fileID: 386168909}
   VictoryScreen: {fileID: 1677209206}
   HUD: {fileID: 223295181}
+  layersToHit:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!212 &326734955
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1121,7 +1124,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 326734953}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.86, y: 0.1, z: 0}
+  m_LocalPosition: {x: -4.17, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 983983191}
@@ -1243,7 +1246,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.50354576
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -2068,7 +2071,7 @@ GameObject:
   - component: {fileID: 538804304}
   - component: {fileID: 538804303}
   - component: {fileID: 538804302}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ParedDuplicadaGameplayTest (3)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -3213,7 +3216,7 @@ GameObject:
   - component: {fileID: 997741304}
   - component: {fileID: 997741306}
   - component: {fileID: 997741305}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ParedDuplicadaGameplayTest (6)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -3345,7 +3348,7 @@ GameObject:
   - component: {fileID: 1025033951}
   - component: {fileID: 1025033950}
   - component: {fileID: 1025033952}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wall
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -3801,7 +3804,7 @@ GameObject:
   - component: {fileID: 1229249485}
   - component: {fileID: 1229249487}
   - component: {fileID: 1229249486}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ParedDuplicadaGameplayTest (7)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -4074,7 +4077,7 @@ GameObject:
   - component: {fileID: 1392590072}
   - component: {fileID: 1392590071}
   - component: {fileID: 1392590070}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wall (2)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -4669,7 +4672,7 @@ GameObject:
   - component: {fileID: 1539076891}
   - component: {fileID: 1539076890}
   - component: {fileID: 1539076889}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ParedDuplicadaGameplayTest (4)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -5163,7 +5166,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1717646496}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.2971427, y: 0.10000024, z: -10}
+  m_LocalPosition: {x: 0.97749996, y: 0.10000024, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5542,7 +5545,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1814781405}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.2971427, y: 0.10000024, z: -10}
+  m_LocalPosition: {x: 0.97749996, y: 0.10000024, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 259881123}
@@ -5699,7 +5702,7 @@ GameObject:
   - component: {fileID: 1881086609}
   - component: {fileID: 1881086611}
   - component: {fileID: 1881086610}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wall (3)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -6263,7 +6266,7 @@ GameObject:
   - component: {fileID: 2050723956}
   - component: {fileID: 2050723958}
   - component: {fileID: 2050723957}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ParedDuplicadaGameplayTest (5)
   m_TagString: Wall
   m_Icon: {fileID: 0}
