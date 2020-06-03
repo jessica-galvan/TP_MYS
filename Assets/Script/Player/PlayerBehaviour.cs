@@ -17,16 +17,6 @@ using UnityEngine.UIElements;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-	public int Reflections;
-	public float maxLenght;
-
-
-	private LineRenderer myLineRenderer;
-	private Ray myRay;
-	private RaycastHit myHit;
-	private Vector3 myDirection;
-	public Transform player;
-
 	[Header("Variables")]
 	[SerializeField]
 	private int health = 3;
@@ -42,11 +32,11 @@ public class PlayerBehaviour : MonoBehaviour
 	[SerializeField]
 	private float rayLenght = 5f;
 	[SerializeField]
-	private int reflections;
+	private int reflections = 5;
+	[SerializeField]
+	private int alphaMultiplier =2;
 
 	[Header("Objetos")]
-	//[SerializeField]
-	//private Transform firePoint;
 	[SerializeField]
 	private Rigidbody2D rb;
 	[SerializeField]
@@ -68,9 +58,9 @@ public class PlayerBehaviour : MonoBehaviour
 	private LayerMask layersToHit;
 
 	//Otros
-	private Vector2 directionProyectil;
 	private Vector2 movement;
 	private Vector2 movementDirection;
+	private Vector2 direction;
 	private bool llave;
 
 	//Timer cooldown
@@ -84,27 +74,26 @@ public class PlayerBehaviour : MonoBehaviour
 	private bool canAnimateAttack = false;
 	private float timerAnimation;
 
+	//franco intento raycast y linerenderer
+	public int Reflections;
+	public float maxLenght;
+	private LineRenderer myLineRenderer;
+	private Ray myRay;
+	private RaycastHit myHit;
+	private Vector3 myDirection;
+	public Transform player;
+
 	private void Start()
 	{
-		//laser = GetComponent<LineRenderer>();
 		llave = false;
 		timer = cooldownAttack;
 		canDie = true;
-		directionProyectil = transform.position + transform.right;	
-	}
-
-	private void Awake()
-	{
+		//laser = GetComponent<LineRenderer>();
 		myLineRenderer = GetComponent<LineRenderer>();
-
 	}
 
 	void Update()
 	{
-		//GameObject bulletTrail = Instantiate(proyectil);
-		//bulletTrail.transform.position = firePoint.position;
-		//bulletTrail.transform.right = firePoint.right;
-
 		//Capta movimientos Horizontales y Verticales. 
 		movement.x = Input.GetAxisRaw("Horizontal");
 		movement.y = Input.GetAxisRaw("Vertical");
@@ -115,33 +104,8 @@ public class PlayerBehaviour : MonoBehaviour
 		{
 			animator.SetFloat("Horizontal", movement.x);
 			animator.SetFloat("Vertical", movement.y);
-			directionProyectil = new Vector2(movement.x, movement.y);
 		}
 		animator.SetFloat("Speed", movement.sqrMagnitude);
-
-
-		myRay = new Ray(transform.position, actualPositionMouse);
-		myLineRenderer.positionCount = 1;
-		myLineRenderer.SetPosition(0, player.transform.position);
-		float remainingLenght = maxLenght;
-
-		/*for (int i = 0; i < Reflections; i++)
-		{
-			if (Physics.Raycast(myRay.origin, myRay.direction, out myHit, remainingLenght))
-			{
-				myLineRenderer.positionCount += 1;
-				myLineRenderer.SetPosition(myLineRenderer.positionCount - 1, myHit.point);
-				remainingLenght -= Vector3.Distance(myRay.origin, myHit.point);
-				myRay = new Ray(myHit.point, Vector3.Reflect(myRay.direction, myHit.normal));
-				if (myHit.collider.tag != "Mole")
-					break;
-			}
-			else
-			{
-				myLineRenderer.positionCount += 1;
-				myLineRenderer.SetPosition(myLineRenderer.positionCount - 1, myRay.origin + myRay.direction * remainingLenght);
-			}
-		}*/
 
 		//Mouse Position
 		actualPositionMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -154,30 +118,7 @@ public class PlayerBehaviour : MonoBehaviour
 			canMove = false;
 			animator.SetFloat("OnAttack", 1f);
 
-
-
-			for (int i = 0; i < Reflections; i++)
-			{
-				if (Physics.Raycast(myRay.origin, myRay.direction, out myHit, remainingLenght))
-				{
-					myLineRenderer.positionCount += 1;
-					myLineRenderer.SetPosition(myLineRenderer.positionCount - 1, myHit.point);
-					remainingLenght -= Vector3.Distance(myRay.origin, myHit.point);
-					myRay = new Ray(myHit.point, Vector3.Reflect(myRay.direction, myHit.normal));
-					if (myHit.collider.tag != "Mole")
-						break;
-				}
-				else
-				{
-					myLineRenderer.positionCount += 1;
-					myLineRenderer.SetPosition(myLineRenderer.positionCount - 1, myRay.origin + myRay.direction * remainingLenght);
-				}
-			}
-
-
-
-
-			//ACA IRIA EL RAYCAST Y LINERENDERER SI FUNCIONARAAAAAAAAAAAAAAAAAAAA
+			//ACA IRIA EL RAYCAST Y LINERENDERER SI FUNCIONARA (cosa de que se active solo cuando el jugador esta apuntando)
 		}
 
 		//RAYCAST & LINERENDERER
@@ -187,7 +128,14 @@ public class PlayerBehaviour : MonoBehaviour
 		if (Input.GetButtonUp("Fire1") && canAttack)
 		{
 			soundManagerScript.PlaySound("Shoot");
-			Instantiate(proyectil, transform.position + directionProyectil, transform.rotation);
+			//Instantiate(proyectil, transform.position + directionProyectil, transform.rotation);
+			
+			//Con esto, le agregamos un offset del pivot del player al tiro. El alpha multiplier es para separarlo más porque con solo la normal quizas no alcanza.
+			direction = (Vector3)actualPositionMouse - (Vector3)transform.position;
+			direction.Normalize();
+			var dn = transform.position +  direction * alphaMultiplier;
+			Instantiate(proyectil, dn, transform.rotation);
+			
 			canMove = true;
 			//Start cooldown attack
 			canCount = true;
@@ -223,6 +171,50 @@ public class PlayerBehaviour : MonoBehaviour
 			canAnimateAttack = false;
 			animator.SetFloat("OnAttack", 0);
 		}
+
+
+		//RAYCAST INTENTO DOS - FRANCO
+		/*myRay = new Ray(transform.position, actualPositionMouse);
+		myLineRenderer.positionCount = 1;
+		myLineRenderer.SetPosition(0, player.transform.position);
+		float remainingLenght = maxLenght;*/
+
+		/*for (int i = 0; i < Reflections; i++)
+		{
+			if (Physics.Raycast(myRay.origin, myRay.direction, out myHit, remainingLenght))
+			{
+				myLineRenderer.positionCount += 1;
+				myLineRenderer.SetPosition(myLineRenderer.positionCount - 1, myHit.point);
+				remainingLenght -= Vector3.Distance(myRay.origin, myHit.point);
+				myRay = new Ray(myHit.point, Vector3.Reflect(myRay.direction, myHit.normal));
+				if (myHit.collider.tag != "Mole")
+					break;
+			}
+			else
+			{
+				myLineRenderer.positionCount += 1;
+				myLineRenderer.SetPosition(myLineRenderer.positionCount - 1, myRay.origin + myRay.direction * remainingLenght);
+			}
+		}*/
+
+
+		/*for (int i = 0; i < Reflections; i++)
+		{
+			if (Physics.Raycast(myRay.origin, myRay.direction, out myHit, remainingLenght))
+			{
+				myLineRenderer.positionCount += 1;
+				myLineRenderer.SetPosition(myLineRenderer.positionCount - 1, myHit.point);
+				remainingLenght -= Vector3.Distance(myRay.origin, myHit.point);
+				myRay = new Ray(myHit.point, Vector3.Reflect(myRay.direction, myHit.normal));
+				if (myHit.collider.tag != "Mole")
+					break;
+			}
+			else
+			{
+				myLineRenderer.positionCount += 1;
+				myLineRenderer.SetPosition(myLineRenderer.positionCount - 1, myRay.origin + myRay.direction * remainingLenght);
+			}
+		}*/
 	}
 	public void FixedUpdate()
 	{
@@ -256,7 +248,7 @@ public class PlayerBehaviour : MonoBehaviour
 		Time.timeScale = 0f;
 	}
 
-	void CastLaser(Vector2 position, Vector2 direction, Vector2 offset) 
+	/*void CastLaser(Vector2 position, Vector2 direction, Vector2 offset) 
 	{
 		for (int i = 0; i < reflections; i++)
 		{
@@ -285,20 +277,16 @@ public class PlayerBehaviour : MonoBehaviour
 				break;
 			}
 		}
-	}
+	}*/
 
-		public void OnTriggerEnter2D(Collider2D col)
+	public void OnTriggerEnter2D(Collider2D col)
 	{
 		//si la colision tiene tag Key
 		if (col.gameObject.CompareTag("Key"))
 		{
-			Debug.Log("Obtuviste una llave");
-			//Cambiame el bool a true
 			llave = true;
 			scoreScript.llave= true;
-			//y borrame el objeto llave de la escena
-			var objeto = col.gameObject;
-			Destroy(objeto);
+			Destroy(col.gameObject);
 		}
 
 		//si la colision tiene tag Door
@@ -307,7 +295,6 @@ public class PlayerBehaviour : MonoBehaviour
 			//y tiene el bool llave en true
 			if (llave)
 			{
-				
 				VictoryScreen.SetActive(true);
 				HUD.SetActive(false);
 				Time.timeScale = 0f;
@@ -322,12 +309,9 @@ public class PlayerBehaviour : MonoBehaviour
 		//Colecciona monedas
 		if (col.gameObject.CompareTag("collectable"))
 		{
-			
-
-			var coin = col.gameObject;
 			soundManagerScript.PlaySound("PickKey");
 			scoreScript.coins += 1;
-			Destroy(coin);
+			Destroy(col.gameObject);
 		}
 		
 	}

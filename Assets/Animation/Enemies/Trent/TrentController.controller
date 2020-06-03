@@ -157,32 +157,6 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &-4485254936550047598
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: TrentRightAttack 0
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: f348f85fed89bb64db6885da5597e8f8, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1101 &-4438325925346320392
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -295,9 +269,6 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 7737150779437053865}
     m_Position: {x: 450, y: 320, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -4485254936550047598}
-    m_Position: {x: -195.0426, y: 531.54, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -9030266480452354133}
     m_Position: {x: 228.12006, y: 127.3909, z: 0}

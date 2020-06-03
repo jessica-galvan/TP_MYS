@@ -99,8 +99,8 @@ MonoBehaviour:
   rb: {fileID: -4742450286589535929}
   damage: 1
   speed: 6
-  firePoint: {fileID: 4383888090272635620, guid: c81683fb013f4d14ab1c478974a766c5,
-    type: 3}
+  timer: 2
+  canPhasePlayer: 1
 --- !u!50 &-4742450286589535929
 Rigidbody2D:
   serializedVersion: 4
@@ -113,7 +113,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0

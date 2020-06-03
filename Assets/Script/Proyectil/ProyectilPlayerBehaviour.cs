@@ -12,8 +12,8 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 	private Vector2 actualPositionMouse; 
 	private Vector2 direction;
 	private DateTime birthObject;
-	private double timeOfLife = 3; //porque el AddSeconds lo pide como doble. 
-	public LineRenderer line;
+	private double timeOfLife = 3; //porque el AddSeconds lo pide como double. 
+	private GameObject player;
 
 	//Objetos que hay que asignar
 	[SerializeField]
@@ -23,9 +23,12 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 	[SerializeField]
 	private float speed = 6f;
 
-	//Objetos que busca internamente
-	private GameObject player;
-	
+	//timer
+	[SerializeField]
+	private float timer = 1f;
+	[SerializeField]
+	private bool canPhasePlayer = true;
+	private bool canCount = true;
 
 	void Awake()
 	{
@@ -51,6 +54,18 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 		//Se lo transforma a 3D para que funcione. 
 		transform.position += (Vector3)direction * speed * Time.deltaTime;
 
+		//Timer
+		if (timer >= 0.0f && canCount)
+		{
+			timer -= Time.deltaTime;
+		}
+		else if (timer <= 0.0f && !canPhasePlayer)
+		{
+			canCount = false;
+			timer = 0.0f;
+			canPhasePlayer = false;
+		}
+
 		//Para darle un tiempo de vida al proyectil y que luego se destruya de la escena EL OBJETO.
 		if (DateTime.Now > birthObject.AddSeconds(timeOfLife))
 		{
@@ -60,33 +75,35 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 	//hacemos que cuando entra en collision con una pared, refleje. 
 	private void OnCollisionEnter2D(Collision2D collision)
     {
-		//NO FUNCIONA LUEGO DE QUE EL PROYETIL SE HIZO TRIGGER
-		if(collision.gameObject.CompareTag("Wall"))
+		if (collision.gameObject.CompareTag("Wall"))
         {
 			direction = Vector2.Reflect(direction, collision.contacts[0].normal);
 		}
-		if(collision.gameObject.CompareTag("Player"))
+
+		if (collision.gameObject.CompareTag("Player"))
 		{
+			Debug.Log("choco player");
 			Destroy(gameObject);
 		}
-    }
+	}
 
 	public void OnTriggerEnter2D(Collider2D collision)
 	{
-		//NO FUNCIONA EL REBOTE, NO SE SABE PORQUE TODAVIA, problema de haberlo pasado a Trigger
-		ContactPoint2D[] contacts = new ContactPoint2D[2];
-		//si chocas contra una pared, rebota
-		if (collision.gameObject.CompareTag("Wall"))
+		RaycastHit hit;
+		if (Physics.Raycast(player.transform.position, direction, out hit))
 		{
-			Vector3 normal = contacts[0].normal;
-			direction = Vector2.Reflect(direction, normal);
+			Debug.Log("Point of contact: " + hit.point);
+
+			if (collision.gameObject.CompareTag("Wall"))
+			{
+				direction = Vector2.Reflect(direction, hit.point);
+			}
+
 		}
 
-		//ESTO SI FUNCIONA
 		//antes de hacer el get component, hagamos que chequee con que collisiona. Dependiendo del tag que tenga, hace una cosa o la otra.
 		if (collision.gameObject.tag == "Mole")
 		{
-			
 			Enemy mole = collision.GetComponent<Enemy>();
 			mole.TakeDamage(damage);
 			Destroy(gameObject);
@@ -97,25 +114,5 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 			trent.TakeSecondDamage(damage);
 			Destroy(gameObject);
 		}
-
-
-		//FRANCO hizo esto.
-		/*Enemy enemy = collision.GetComponent<Enemy>();
-		{
-			if (enemy)
-			{
-				enemy.TakeDamage(damage);
-				Debug.Log("im an enemy!");
-			}
-			Destroy(gameObject);
-
-		}
-		TrentEnemy trent = collision.GetComponent<TrentEnemy>();
-		if (trent)
-		{
-			trent.TakeSecondDamage(damage);
-			Debug.Log("Im the second enemy");
-		}
-		Destroy(gameObject);*/
 	}	
 }
