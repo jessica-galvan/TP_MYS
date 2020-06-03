@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class soundManagerScript : MonoBehaviour
 {
-    public static AudioClip Die, GameOver, EnemyDie, PickKey;
+    public static AudioClip Die, GameOver, EnemyDie, PickKey, Shoot;
     static AudioSource audioSrc;
 
     // Start is called before the first frame update
     void Start()
     {
+        Shoot = Resources.Load<AudioClip>("Shoot");
         GameOver = Resources.Load<AudioClip>("GameOver");
         EnemyDie = Resources.Load<AudioClip>("EnemyDie");
         PickKey = Resources.Load<AudioClip>("PickKey");
@@ -30,6 +31,10 @@ public class soundManagerScript : MonoBehaviour
             case "PickKey":
                 audioSrc.PlayOneShot(PickKey);
                 break;
+            case "Shoot":
+                audioSrc.PlayOneShot(Shoot);
+                break;
+            
             
         }
     }

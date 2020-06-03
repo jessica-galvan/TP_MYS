@@ -45,12 +45,13 @@ public class TrentEnemy : MonoBehaviour
         health -= damage;
         if (health <= 0)
         {
+            trentAnimator.SetBool("Die", true);
+            soundManagerScript.PlaySound("EnemyDie");
             TrentDie();
         }
     }
     void TrentDie()
-    {
-        trentAnimator.SetBool("Die", true);
+    {  
         Destroy(gameObject, 1f);
     }
     private void OnTriggerEnter2D(Collider2D collision)

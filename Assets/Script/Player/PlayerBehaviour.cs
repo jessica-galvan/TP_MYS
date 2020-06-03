@@ -149,6 +149,7 @@ public class PlayerBehaviour : MonoBehaviour
 		//Hacer que salga un proyectil al apretar el boton izquierdo del mouse, e inicia la animacion del ataque
 		if (Input.GetButtonDown("Fire1") && canAttack)
 		{
+			
 			//canMove es para que no se pueda mover mientras este apretando el mouse.
 			canMove = false;
 			animator.SetFloat("OnAttack", 1f);
@@ -185,7 +186,8 @@ public class PlayerBehaviour : MonoBehaviour
 		//Cuando el jugador deja de apretar el boton, se termina la animación. 
 		if (Input.GetButtonUp("Fire1") && canAttack)
 		{
-   			Instantiate(proyectil, transform.position + directionProyectil, transform.rotation);
+			soundManagerScript.PlaySound("Shoot");
+			Instantiate(proyectil, transform.position + directionProyectil, transform.rotation);
 			canMove = true;
 			//Start cooldown attack
 			canCount = true;
