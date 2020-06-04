@@ -87,6 +87,7 @@ public class PlayerBehaviour : MonoBehaviour
 		canDie = true;
 		laser = GetComponent<LineRenderer>();
 		laser.useWorldSpace = true;
+		laser.enabled = false;
 		checkDirection = new Vector2(0, 0);
 	}
 
@@ -114,15 +115,17 @@ public class PlayerBehaviour : MonoBehaviour
 		{
 			//canMove es para que no se pueda mover mientras este apretando el mouse.
 			canMove = false;
-			animator.SetFloat("OnAttack", 1f);
-			//ACA IRIA EL RAYCAST Y LINERENDERER SI FUNCIONARA (cosa de que se active solo cuando el jugador esta apuntando)
+			laser.enabled = true;
 		}
+
+		//RAYCAST & LINERENDERER
+		CastLaser();
 
 		//Cuando el jugador deja de apretar el boton, se termina la animación. 
 		if (Input.GetButtonUp("Fire1") && canAttack)
 		{
 			soundManagerScript.PlaySound("Shoot");
-		
+			laser.enabled = false;
 			//Con esto, le agregamos un offset del pivot del player al tiro. El alpha multiplier es para separarlo más porque con solo la normal quizas no alcanza.
 			direction = (Vector3)actualPositionMouse - (Vector3)transform.position;
 			direction.Normalize();
@@ -131,6 +134,7 @@ public class PlayerBehaviour : MonoBehaviour
 			Debug.Log("dn: " + dn + "origen: " + transform.position);
 			Instantiate(proyectil, dn, transform.rotation);
 			
+
 			canMove = true;
 			//Start cooldown attack
 			canCount = true;
@@ -140,10 +144,10 @@ public class PlayerBehaviour : MonoBehaviour
 			timerAnimation = 0.1f;
 			canAnimateAttack = true;
 			canCount2 = true;
+			
 		}
 
-		//RAYCAST & LINERENDERER
-		CastLaser();
+
 
 		//El timer del cooldown para el ataque
 		if (timer>= 0.0f && canCount)
