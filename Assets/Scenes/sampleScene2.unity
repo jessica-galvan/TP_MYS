@@ -446,7 +446,7 @@ RectTransform:
   m_Children:
   - {fileID: 1991925044}
   m_Father: {fileID: 438032144}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -466,7 +466,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.21568628}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.6039216}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -775,7 +775,7 @@ RectTransform:
   - {fileID: 1296834811}
   - {fileID: 403690580}
   m_Father: {fileID: 438032144}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -1466,7 +1466,7 @@ RectTransform:
   - {fileID: 1899953641}
   - {fileID: 861418275}
   m_Father: {fileID: 438032144}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1787,10 +1787,10 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 223295182}
   - {fileID: 1677209207}
   - {fileID: 386168910}
   - {fileID: 129499554}
-  - {fileID: 223295182}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1812,8 +1812,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PauseMenuUI: {fileID: 129499553}
-  DeathScreen: {fileID: 0}
-  VictoryScreen: {fileID: 0}
+  DeathScreen: {fileID: 386168909}
+  VictoryScreen: {fileID: 1677209206}
+  HUDScreen: {fileID: 223295181}
 --- !u!1 &442529497
 GameObject:
   m_ObjectHideFlags: 0
@@ -5195,7 +5196,7 @@ RectTransform:
   - {fileID: 1484501493}
   - {fileID: 1690453374}
   m_Father: {fileID: 438032144}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

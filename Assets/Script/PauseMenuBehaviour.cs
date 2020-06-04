@@ -8,11 +8,13 @@ public class PauseMenuBehaviour : MonoBehaviour
 
     public static bool GameIsPause = false;
     [SerializeField]
-    public GameObject PauseMenuUI;
+    private GameObject PauseMenuUI;
     [SerializeField]
-    public GameObject DeathScreen;
+    private GameObject DeathScreen;
     [SerializeField]
-    public GameObject VictoryScreen;
+    private GameObject VictoryScreen;
+    [SerializeField]
+    private GameObject HUDScreen;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +44,7 @@ public class PauseMenuBehaviour : MonoBehaviour
         PauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameIsPause = false;
+        HUDScreen.SetActive(true);
     }
 
     void Pause()
@@ -49,6 +52,7 @@ public class PauseMenuBehaviour : MonoBehaviour
         PauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPause = true;
+        HUDScreen.SetActive(false);
     }
 
     public void LoadMenu()

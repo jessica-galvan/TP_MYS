@@ -13,6 +13,9 @@ public class keyRotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(1, 2, 0);
+        if (!PauseMenuBehaviour.GameIsPause)
+        {
+            transform.Rotate(1, 2, 0);
+        }
     }
 }

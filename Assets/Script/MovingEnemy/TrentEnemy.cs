@@ -22,12 +22,13 @@ public class TrentEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
         trentAnimator.SetBool("Walk", true);
-        transform.position += new Vector3(0.04f * Mathf.Sin(1f * Time.time), 0);
-       
+        if (!PauseMenuBehaviour.GameIsPause)
+        {
+            transform.position += new Vector3(0.04f * Mathf.Sin(1f * Time.time), 0);
+        }
+            
         CheckTrentFire();
-        
     }
     void CheckTrentFire()
     {
@@ -36,8 +37,6 @@ public class TrentEnemy : MonoBehaviour
             Instantiate(enemyTrentBullet, enemyTrentFirePoint.position, Quaternion.identity);
             nextFire = Time.time + fireRate;
         }
-
-
     }    
 
     public void TakeSecondDamage(int damage)
@@ -45,13 +44,13 @@ public class TrentEnemy : MonoBehaviour
         health -= damage;
         if (health <= 0)
         {
-            trentAnimator.SetBool("Die", true);
             soundManagerScript.PlaySound("EnemyDie");
             TrentDie();
         }
     }
     void TrentDie()
-    {  
+    {
+        trentAnimator.SetBool("Die", true);
         Destroy(gameObject, 1f);
     }
     private void OnTriggerEnter2D(Collider2D collision)

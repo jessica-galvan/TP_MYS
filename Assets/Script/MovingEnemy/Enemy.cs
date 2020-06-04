@@ -21,8 +21,11 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!PauseMenuBehaviour.GameIsPause)
+        {
+            transform.position += new Vector3(0, 0.05f * Mathf.Sin(1f * Time.time));
+        }
         
-        transform.position += new Vector3(0, 0.05f * Mathf.Sin(1f * Time.time));
         animatorMole.SetBool("Walking", true);
         CheckFire();
     }
@@ -35,13 +38,12 @@ public class Enemy : MonoBehaviour
             Instantiate(EnemyBullet, transform.position, Quaternion.identity);
             nextFire = Time.time + fireRate;
         }
-
     }
 
     public void TakeDamage(int damage)
     {
         health -= damage;
-        if (health < 0)
+        if (health <= 0)
         {
             soundManagerScript.PlaySound("EnemyDie");
             Die();
@@ -53,6 +55,4 @@ public class Enemy : MonoBehaviour
         animatorMole.SetBool("Die", true);
         Destroy(gameObject, 1f);
     }
-    
-
 }

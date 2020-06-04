@@ -144,10 +144,7 @@ public class PlayerBehaviour : MonoBehaviour
 			timerAnimation = 0.1f;
 			canAnimateAttack = true;
 			canCount2 = true;
-			
 		}
-
-
 
 		//El timer del cooldown para el ataque
 		if (timer>= 0.0f && canCount)
