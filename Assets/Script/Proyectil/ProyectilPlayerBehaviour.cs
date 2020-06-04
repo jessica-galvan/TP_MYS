@@ -23,13 +23,6 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 	[SerializeField]
 	private float speed = 6f;
 
-	//timer
-	[SerializeField]
-	private float timer = 1f;
-	[SerializeField]
-	private bool canPhasePlayer = true;
-	private bool canCount = true;
-
 	void Awake()
 	{
 		//Obtener la posicion actual del mouse dentor del juego.	
@@ -54,18 +47,6 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 		//Se lo transforma a 3D para que funcione. 
 		transform.position += (Vector3)direction * speed * Time.deltaTime;
 
-		//Timer
-		if (timer >= 0.0f && canCount)
-		{
-			timer -= Time.deltaTime;
-		}
-		else if (timer <= 0.0f && !canPhasePlayer)
-		{
-			canCount = false;
-			timer = 0.0f;
-			canPhasePlayer = false;
-		}
-
 		//Para darle un tiempo de vida al proyectil y que luego se destruya de la escena EL OBJETO.
 		if (DateTime.Now > birthObject.AddSeconds(timeOfLife))
 		{
@@ -82,25 +63,12 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 
 		if (collision.gameObject.CompareTag("Player"))
 		{
-			Debug.Log("choco player");
 			Destroy(gameObject);
 		}
 	}
 
 	public void OnTriggerEnter2D(Collider2D collision)
 	{
-		RaycastHit hit;
-		if (Physics.Raycast(player.transform.position, direction, out hit))
-		{
-			Debug.Log("Point of contact: " + hit.point);
-
-			if (collision.gameObject.CompareTag("Wall"))
-			{
-				direction = Vector2.Reflect(direction, hit.point);
-			}
-
-		}
-
 		//antes de hacer el get component, hagamos que chequee con que collisiona. Dependiendo del tag que tenga, hace una cosa o la otra.
 		if (collision.gameObject.tag == "Mole")
 		{

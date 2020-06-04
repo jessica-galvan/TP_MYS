@@ -11,9 +11,10 @@ using UnityEngine.SocialPlatforms.Impl;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor;
 using UnityEngine.UIElements;
+using System.Diagnostics.Tracing;
 //using Quaternion = UnityEngine.Quaternion;
 
-	[RequireComponent(typeof(LineRenderer))]
+[RequireComponent(typeof(LineRenderer))]
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -32,9 +33,11 @@ public class PlayerBehaviour : MonoBehaviour
 	[SerializeField]
 	private float rayLenght = 5f;
 	[SerializeField]
-	private int reflections = 5;
+	private int reflections = 2;
 	[SerializeField]
-	private int alphaMultiplier =2;
+	private float alphaMultiplier =2;
+	[SerializeField]
+	private LayerMask layersToHit;
 
 	[Header("Objetos")]
 	[SerializeField]
@@ -49,19 +52,21 @@ public class PlayerBehaviour : MonoBehaviour
 	private GameObject VictoryScreen;
 	[SerializeField]
 	private GameObject HUD;
+	private Vector2 dn;
 
 	//Raycast
 	private Vector3 actualPositionMouse;
 	private RaycastHit2D hit2D;
 	private LineRenderer laser;
-	[SerializeField]
-	private LayerMask layersToHit;
+	private Transform laserHit;
 
 	//Otros
+	private bool llave;
 	private Vector2 movement;
 	private Vector2 movementDirection;
 	private Vector2 direction;
-	private bool llave;
+	private Vector2 facingDirection;
+	private Vector2 checkDirection;
 
 	//Timer cooldown
 	private bool canMove = true;
@@ -74,22 +79,15 @@ public class PlayerBehaviour : MonoBehaviour
 	private bool canAnimateAttack = false;
 	private float timerAnimation;
 
-	//franco intento raycast y linerenderer
-	public int Reflections;
-	public float maxLenght;
-	private LineRenderer myLineRenderer;
-	private Ray myRay;
-	private RaycastHit myHit;
-	private Vector3 myDirection;
-	public Transform player;
 
 	private void Start()
 	{
 		llave = false;
 		timer = cooldownAttack;
 		canDie = true;
-		//laser = GetComponent<LineRenderer>();
-		myLineRenderer = GetComponent<LineRenderer>();
+		laser = GetComponent<LineRenderer>();
+		laser.useWorldSpace = true;
+		checkDirection = new Vector2(0, 0);
 	}
 
 	void Update()
@@ -104,6 +102,7 @@ public class PlayerBehaviour : MonoBehaviour
 		{
 			animator.SetFloat("Horizontal", movement.x);
 			animator.SetFloat("Vertical", movement.y);
+			facingDirection = new Vector2(movement.x, movement.y);
 		}
 		animator.SetFloat("Speed", movement.sqrMagnitude);
 
@@ -113,27 +112,23 @@ public class PlayerBehaviour : MonoBehaviour
 		//Hacer que salga un proyectil al apretar el boton izquierdo del mouse, e inicia la animacion del ataque
 		if (Input.GetButtonDown("Fire1") && canAttack)
 		{
-			
 			//canMove es para que no se pueda mover mientras este apretando el mouse.
 			canMove = false;
 			animator.SetFloat("OnAttack", 1f);
-
 			//ACA IRIA EL RAYCAST Y LINERENDERER SI FUNCIONARA (cosa de que se active solo cuando el jugador esta apuntando)
 		}
-
-		//RAYCAST & LINERENDERER
-		//CastLaser(transform.position, actualPositionMouse, directionProyectil);
 
 		//Cuando el jugador deja de apretar el boton, se termina la animación. 
 		if (Input.GetButtonUp("Fire1") && canAttack)
 		{
 			soundManagerScript.PlaySound("Shoot");
-			//Instantiate(proyectil, transform.position + directionProyectil, transform.rotation);
-			
+		
 			//Con esto, le agregamos un offset del pivot del player al tiro. El alpha multiplier es para separarlo más porque con solo la normal quizas no alcanza.
 			direction = (Vector3)actualPositionMouse - (Vector3)transform.position;
 			direction.Normalize();
-			var dn = transform.position +  direction * alphaMultiplier;
+
+			dn = transform.position +  direction * alphaMultiplier;
+			Debug.Log("dn: " + dn + "origen: " + transform.position);
 			Instantiate(proyectil, dn, transform.rotation);
 			
 			canMove = true;
@@ -146,7 +141,10 @@ public class PlayerBehaviour : MonoBehaviour
 			canAnimateAttack = true;
 			canCount2 = true;
 		}
-		
+
+		//RAYCAST & LINERENDERER
+		CastLaser();
+
 		//El timer del cooldown para el ataque
 		if (timer>= 0.0f && canCount)
 		{
@@ -171,50 +169,6 @@ public class PlayerBehaviour : MonoBehaviour
 			canAnimateAttack = false;
 			animator.SetFloat("OnAttack", 0);
 		}
-
-
-		//RAYCAST INTENTO DOS - FRANCO
-		/*myRay = new Ray(transform.position, actualPositionMouse);
-		myLineRenderer.positionCount = 1;
-		myLineRenderer.SetPosition(0, player.transform.position);
-		float remainingLenght = maxLenght;*/
-
-		/*for (int i = 0; i < Reflections; i++)
-		{
-			if (Physics.Raycast(myRay.origin, myRay.direction, out myHit, remainingLenght))
-			{
-				myLineRenderer.positionCount += 1;
-				myLineRenderer.SetPosition(myLineRenderer.positionCount - 1, myHit.point);
-				remainingLenght -= Vector3.Distance(myRay.origin, myHit.point);
-				myRay = new Ray(myHit.point, Vector3.Reflect(myRay.direction, myHit.normal));
-				if (myHit.collider.tag != "Mole")
-					break;
-			}
-			else
-			{
-				myLineRenderer.positionCount += 1;
-				myLineRenderer.SetPosition(myLineRenderer.positionCount - 1, myRay.origin + myRay.direction * remainingLenght);
-			}
-		}*/
-
-
-		/*for (int i = 0; i < Reflections; i++)
-		{
-			if (Physics.Raycast(myRay.origin, myRay.direction, out myHit, remainingLenght))
-			{
-				myLineRenderer.positionCount += 1;
-				myLineRenderer.SetPosition(myLineRenderer.positionCount - 1, myHit.point);
-				remainingLenght -= Vector3.Distance(myRay.origin, myHit.point);
-				myRay = new Ray(myHit.point, Vector3.Reflect(myRay.direction, myHit.normal));
-				if (myHit.collider.tag != "Mole")
-					break;
-			}
-			else
-			{
-				myLineRenderer.positionCount += 1;
-				myLineRenderer.SetPosition(myLineRenderer.positionCount - 1, myRay.origin + myRay.direction * remainingLenght);
-			}
-		}*/
 	}
 	public void FixedUpdate()
 	{
@@ -248,36 +202,47 @@ public class PlayerBehaviour : MonoBehaviour
 		Time.timeScale = 0f;
 	}
 
-	/*void CastLaser(Vector2 position, Vector2 direction, Vector2 offset) 
+	void CastLaser() 
 	{
-		for (int i = 0; i < reflections; i++)
-		{
-			Debug.Log("Hola " + i);
-			//Ray ray = new Ray (position, direction);
-			hit2D = Physics2D.Raycast(position + offset, direction, rayLenght, layersToHit);
-			//laser.positionCount += 1;
-			//laser.SetPosition(laser.positionCount - 1, hit2D.point);
+		int laserContador = 0;
+		int contador = 1;
+		Vector2 position = transform.position;
+		Vector2 direction = actualPositionMouse - position;
+		direction.Normalize();
+		hit2D = Physics2D.Raycast(position, direction, rayLenght, layersToHit);
+		Debug.DrawLine(position, hit2D.point, Color.red);
 
-			//EHHH... 
-			//var remainingLenght -= Vector2.Distance(ray.origin, hit2D.point);
-			
+		while (contador < reflections)
+        {
+			laser.positionCount = reflections;
+			hit2D = Physics2D.Raycast(position, direction, rayLenght, layersToHit);
+
 			if (hit2D)
 			{
-				//Debug.DrawLine(position, hit2D.point, Color.red);
-				//Debug.DrawRay(position, direction * rayLenght, Color.red);
+				//Line Renderer StartingPoint
+				//laser.SetPosition(laser.positionCount-1, position);
+				laser.SetPosition(laserContador, position);
+
+				//Change position to hit2.point as a new starting point
+				direction = (Vector3)hit2D.point - position;
+				direction = Vector2.Reflect(direction, hit2D.normal);
 				position = hit2D.point;
-				direction = hit2D.normal;
-			} 
+				contador++;
+				laserContador++;
+
+				//Line Renderer Ending Point changed after hit2d.point
+				laser.SetPosition(laserContador, position);
+			}
 			else
-            {
-				Debug.DrawRay(position, direction * rayLenght, Color.blue);
-				//laser.positionCount += 1;
-				//laser.SetPosition(laser.positionCount - 1, position + offset + direction);
-				//laser.SetPosition(laser.positionCount - 1, position + offset + direction * remainingLenght);
+			{
+				//Debug.DrawLine(position, direction * rayLenght, Color.blue);
+				//laser.positionCount = 1;
+				//laser.SetPosition(0, position + direction);
+				//laser.SetPosition(1, position + direction * 5f);
 				break;
 			}
 		}
-	}*/
+	}
 
 	public void OnTriggerEnter2D(Collider2D col)
 	{
@@ -313,6 +278,35 @@ public class PlayerBehaviour : MonoBehaviour
 			scoreScript.coins += 1;
 			Destroy(col.gameObject);
 		}
-		
 	}
+
+	/*private void checkAlpha() 
+	{
+		if(facingDirection.x >  checkDirection.x)
+        {
+			Debug.Log("Right");
+			
+			//mouse is up/down alpha at least 3.5 or 4
+			//mouse is left alpha 2
+			//mouse is right alpha 1
+			  
+        }
+		else if(facingDirection.x < checkDirection.x)
+        {
+			Debug.Log("Left");
+			
+			//mouse is up/down alpha at least 3.5 or 4
+			//mouse is left alpha 2
+			//mouse is right alpha 1	
+		}
+		else if(facingDirection.y < checkDirection.y)
+        {
+			Debug.Log("Down");
+		}
+		else if (facingDirection.y > checkDirection.y)
+        {
+			Debug.Log("Up");
+		}
+	}*/
+
 }
