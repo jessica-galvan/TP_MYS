@@ -24,7 +24,7 @@ public class EnemyBullet : MonoBehaviour
         PlayerBehaviour playerdetection = collision.GetComponent<PlayerBehaviour>();
         if (playerdetection != null)
         {
-            soundManagerScript.PlaySound("GameOver");
+            soundManagerScript.PlaySound("PlayerLooseLife");
             playerdetection.TakeEnemyDamage(enemyDamage);
             Destroy(gameObject);
         }

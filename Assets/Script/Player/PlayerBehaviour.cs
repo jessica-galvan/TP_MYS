@@ -98,12 +98,15 @@ public class PlayerBehaviour : MonoBehaviour
 		movement.x = Input.GetAxisRaw("Horizontal");
 		movement.y = Input.GetAxisRaw("Vertical");
 		movementDirection = new Vector2(movement.x, movement.y);
+		
 
 		//Animator. Si el jugador deja de moverse, se queda mirando en el sentido en que estaba yendo
 		if (movementDirection != Vector2.zero)
 		{
 			animator.SetFloat("Horizontal", movement.x);
+			//soundManagerScript.PlaySound("Steps");
 			animator.SetFloat("Vertical", movement.y);
+			//soundManagerScript.PlaySound("Steps");
 			facingDirection = new Vector2(movement.x, movement.y);
 		}
 		animator.SetFloat("Speed", movement.sqrMagnitude);
@@ -196,6 +199,7 @@ public class PlayerBehaviour : MonoBehaviour
 		scoreScript.health = health;
 		if (health <= 0)
 		{
+			soundManagerScript.PlaySound("PlayerDie");
 			if (canDie)
 			{
 				PlayerDie();
@@ -256,6 +260,7 @@ public class PlayerBehaviour : MonoBehaviour
 		//si la colision tiene tag Key
 		if (col.gameObject.CompareTag("Key"))
 		{
+			soundManagerScript.PlaySound("GetKeySound");
 			llave = true;
 			scoreScript.llave = true;
 			Destroy(col.gameObject);
@@ -267,6 +272,7 @@ public class PlayerBehaviour : MonoBehaviour
 			//y tiene el bool llave en true
 			if (llave)
 			{
+				
 				VictoryScreen.SetActive(true);
 				HUD.SetActive(false);
 				Time.timeScale = 0f;
@@ -281,7 +287,7 @@ public class PlayerBehaviour : MonoBehaviour
 		//Colecciona monedas
 		if (col.gameObject.CompareTag("collectable"))
 		{
-			soundManagerScript.PlaySound("PickKey");
+			soundManagerScript.PlaySound("CoinSound");
 			scoreScript.coins += 1;
 			Destroy(col.gameObject);
 		}

@@ -73,12 +73,14 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 		//antes de hacer el get component, hagamos que chequee con que collisiona. Dependiendo del tag que tenga, hace una cosa o la otra.
 		if (collision.gameObject.tag == "Mole")
 		{
+			soundManagerScript.PlaySound("HitEnemy");
 			Enemy mole = collision.GetComponent<Enemy>();
 			mole.TakeDamage(damage);
 			Destroy(gameObject);
 		}
 		else if (collision.gameObject.tag == "Trent")
 		{
+			soundManagerScript.PlaySound("HitEnemy");
 			TrentEnemy trent = collision.GetComponent<TrentEnemy>();
 			trent.TakeSecondDamage(damage);
 			Destroy(gameObject);

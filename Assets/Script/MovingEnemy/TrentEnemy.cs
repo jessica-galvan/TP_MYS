@@ -22,12 +22,14 @@ public class TrentEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        trentAnimator.SetBool("Walk", true);
+        
+
         if (!PauseMenuBehaviour.GameIsPause)
         {
             transform.position += new Vector3(0.04f * Mathf.Sin(1f * Time.time), 0);
+            trentAnimator.SetBool("IsWalking", true);
         }
-            
+
         CheckTrentFire();
     }
     void CheckTrentFire()

@@ -24,6 +24,7 @@ public class TrentEnemyBullet : MonoBehaviour
         PlayerBehaviour player = collision.GetComponent<PlayerBehaviour>();
         if (player != null)
         {
+            soundManagerScript.PlaySound("PlayerLooseLife");
             player.TakeEnemyDamage(damage);
         }
         Destroy(gameObject);
