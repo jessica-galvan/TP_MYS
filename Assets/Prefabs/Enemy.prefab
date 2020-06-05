@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2525069733695650756}
   - component: {fileID: 2525069733695650757}
   - component: {fileID: 1863899423}
+  - component: {fileID: 1738360605421466933}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Mole
@@ -103,7 +104,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!61 &2525069733695650756
 BoxCollider2D:
@@ -144,7 +145,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 3
-  activeZone: {fileID: 0}
   EnemyBullet: {fileID: 8660247282609202268, guid: 99979800701a37c418dd83b3ece4942c,
     type: 3}
   animatorMole: {fileID: 1863899423}
@@ -167,3 +167,14 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!210 &1738360605421466933
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2525069733695650758}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 5
