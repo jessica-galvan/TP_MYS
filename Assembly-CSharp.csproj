@@ -76,12 +76,7 @@
     <Compile Include="Assets\Samples\Cinemachine\2.5.0\Cinemachine Example Scenes\Shared\Scripts\PlayerMove.cs" />
     <Compile Include="Assets\Samples\Cinemachine\2.5.0\Cinemachine Example Scenes\Shared\Scripts\PlayerMoveOnSphere.cs" />
     <Compile Include="Assets\Samples\Cinemachine\2.5.0\Cinemachine Example Scenes\Shared\Scripts\PlayerMovePhysics.cs" />
-    <Compile Include="Assets\Script\Clases Viejas\clasedos.cs" />
-    <Compile Include="Assets\Script\Clases Viejas\CubeIzquierda.cs" />
-    <Compile Include="Assets\Script\Clases Viejas\CubeMovement.cs" />
-    <Compile Include="Assets\Script\Clases Viejas\NewScriptMove.cs" />
-    <Compile Include="Assets\Script\Clases Viejas\PlatformMovement.cs" />
-    <Compile Include="Assets\Script\Clases Viejas\Rotator.cs" />
+    <Compile Include="Assets\Script\CursorManager.cs" />
     <Compile Include="Assets\Script\keyRotation.cs" />
     <Compile Include="Assets\Script\MenuBehaviour.cs" />
     <Compile Include="Assets\Script\MovingEnemy\Enemy.cs" />

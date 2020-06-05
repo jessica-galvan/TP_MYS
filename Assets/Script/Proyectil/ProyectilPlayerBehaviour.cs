@@ -63,6 +63,7 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 
 		if (collision.gameObject.CompareTag("Player"))
 		{
+			Debug.Log("Choco");
 			Destroy(gameObject);
 		}
 	}

@@ -6,13 +6,13 @@ using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 using Vector2 = UnityEngine.Vector3;
 using System.Threading;
-using UnityEditor.Experimental.Rendering;
+//using UnityEditor.Experimental.Rendering;
 using UnityEngine.SocialPlatforms.Impl;
-using UnityEditor.Experimental.GraphView;
+//using UnityEditor.Experimental.GraphView;
 using UnityEditor;
 using UnityEngine.UIElements;
 using System.Diagnostics.Tracing;
-//using Quaternion = UnityEngine.Quaternion;
+
 
 [RequireComponent(typeof(LineRenderer))]
 
@@ -35,7 +35,7 @@ public class PlayerBehaviour : MonoBehaviour
 	[SerializeField]
 	private int reflections = 2;
 	[SerializeField]
-	private float alphaMultiplier =2;
+	private float alphaMultiplier = 2;
 	[SerializeField]
 	private LayerMask layersToHit;
 
@@ -62,6 +62,7 @@ public class PlayerBehaviour : MonoBehaviour
 
 	//Otros
 	private bool llave;
+	private bool isAttacking = false;
 	private Vector2 movement;
 	private Vector2 movementDirection;
 	private Vector2 direction;
@@ -70,7 +71,7 @@ public class PlayerBehaviour : MonoBehaviour
 
 	//Timer cooldown
 	private bool canMove = true;
-	private bool canAttack = true;
+	public static bool canAttack = true;
 	private bool canCount = false;
 	private float timer;
 
@@ -111,30 +112,33 @@ public class PlayerBehaviour : MonoBehaviour
 		actualPositionMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
 		//Hacer que salga un proyectil al apretar el boton izquierdo del mouse, e inicia la animacion del ataque
-		if (Input.GetButtonDown("Fire1") && canAttack)
+		if (Input.GetButtonDown("Fire1") && canAttack && !isAttacking && !PauseMenuBehaviour.GameIsPause)
 		{
 			//canMove es para que no se pueda mover mientras este apretando el mouse.
 			canMove = false;
 			laser.enabled = true;
+			animator.SetFloat("OnAttack", 1f);
+			isAttacking = true;
 		}
 
 		//RAYCAST & LINERENDERER
 		CastLaser();
 
 		//Cuando el jugador deja de apretar el boton, se termina la animación. 
-		if (Input.GetButtonUp("Fire1") && canAttack)
+		if (Input.GetButtonUp("Fire1") && canAttack && isAttacking)
 		{
 			soundManagerScript.PlaySound("Shoot");
 			laser.enabled = false;
+
 			//Con esto, le agregamos un offset del pivot del player al tiro. El alpha multiplier es para separarlo más porque con solo la normal quizas no alcanza.
 			direction = (Vector3)actualPositionMouse - (Vector3)transform.position;
 			direction.Normalize();
-
-			dn = transform.position +  direction * alphaMultiplier;
-			Debug.Log("dn: " + dn + "origen: " + transform.position);
+			checkAlpha();
+			dn = transform.position + direction * alphaMultiplier;
+			Debug.Log("dn: " + dn + "origen: " + transform.position + "mouse: " + direction + "facing: " + facingDirection);
 			Instantiate(proyectil, dn, transform.rotation);
-			
 
+			animator.SetFloat("Speed", movement.sqrMagnitude);
 			canMove = true;
 			//Start cooldown attack
 			canCount = true;
@@ -144,10 +148,11 @@ public class PlayerBehaviour : MonoBehaviour
 			timerAnimation = 0.1f;
 			canAnimateAttack = true;
 			canCount2 = true;
+
 		}
 
 		//El timer del cooldown para el ataque
-		if (timer>= 0.0f && canCount)
+		if (timer >= 0.0f && canCount)
 		{
 			timer -= Time.deltaTime;
 		}
@@ -169,12 +174,13 @@ public class PlayerBehaviour : MonoBehaviour
 			timerAnimation = 0.0f;
 			canAnimateAttack = false;
 			animator.SetFloat("OnAttack", 0);
+			isAttacking = false;
 		}
 	}
 	public void FixedUpdate()
 	{
-		if(canMove)
-        {
+		if (canMove)
+		{
 			rb.MovePosition((Vector2)rb.position + (movement * moveSpeed * Time.fixedDeltaTime));
 		}
 
@@ -190,8 +196,8 @@ public class PlayerBehaviour : MonoBehaviour
 		scoreScript.health = health;
 		if (health <= 0)
 		{
-            if (canDie)
-            {
+			if (canDie)
+			{
 				PlayerDie();
 			}
 		}
@@ -203,7 +209,7 @@ public class PlayerBehaviour : MonoBehaviour
 		Time.timeScale = 0f;
 	}
 
-	void CastLaser() 
+	void CastLaser()
 	{
 		int laserContador = 0;
 		int contador = 1;
@@ -214,7 +220,7 @@ public class PlayerBehaviour : MonoBehaviour
 		Debug.DrawLine(position, hit2D.point, Color.red);
 
 		while (contador < reflections)
-        {
+		{
 			laser.positionCount = reflections;
 			hit2D = Physics2D.Raycast(position, direction, rayLenght, layersToHit);
 
@@ -251,7 +257,7 @@ public class PlayerBehaviour : MonoBehaviour
 		if (col.gameObject.CompareTag("Key"))
 		{
 			llave = true;
-			scoreScript.llave= true;
+			scoreScript.llave = true;
 			Destroy(col.gameObject);
 		}
 
@@ -281,33 +287,30 @@ public class PlayerBehaviour : MonoBehaviour
 		}
 	}
 
-	/*private void checkAlpha() 
+	private void checkAlpha()
 	{
-		if(facingDirection.x >  checkDirection.x)
-        {
+		if (facingDirection.x > checkDirection.x)
+		{
 			Debug.Log("Right");
-			
-			//mouse is up/down alpha at least 3.5 or 4
-			//mouse is left alpha 2
-			//mouse is right alpha 1
-			  
-        }
-		else if(facingDirection.x < checkDirection.x)
-        {
+			alphaMultiplier = 2;
+		}
+		else if (facingDirection.x < checkDirection.x)
+		{
 			Debug.Log("Left");
-			
+			alphaMultiplier = 2;
 			//mouse is up/down alpha at least 3.5 or 4
 			//mouse is left alpha 2
 			//mouse is right alpha 1	
 		}
-		else if(facingDirection.y < checkDirection.y)
-        {
+		else if (facingDirection.y < checkDirection.y)
+		{
 			Debug.Log("Down");
+			alphaMultiplier = 3.5f;
 		}
 		else if (facingDirection.y > checkDirection.y)
-        {
+		{
 			Debug.Log("Up");
+			alphaMultiplier = 3.5f;
 		}
-	}*/
-
+	}
 }
