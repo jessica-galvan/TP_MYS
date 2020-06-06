@@ -13,7 +13,6 @@ using UnityEditor;
 using UnityEngine.UIElements;
 using System.Diagnostics.Tracing;
 
-
 [RequireComponent(typeof(LineRenderer))]
 
 public class PlayerBehaviour : MonoBehaviour
@@ -58,7 +57,6 @@ public class PlayerBehaviour : MonoBehaviour
 	private Vector3 actualPositionMouse;
 	private RaycastHit2D hit2D;
 	private LineRenderer laser;
-	private Transform laserHit;
 
 	//Otros
 	private bool llave;
@@ -66,8 +64,8 @@ public class PlayerBehaviour : MonoBehaviour
 	private Vector2 movement;
 	private Vector2 movementDirection;
 	private Vector2 direction;
-	private Vector2 facingDirection;
-	private Vector2 checkDirection;
+	//private Vector2 facingDirection;
+	//private Vector2 checkDirection;
 
 	//Timer cooldown
 	private bool canMove = true;
@@ -80,7 +78,6 @@ public class PlayerBehaviour : MonoBehaviour
 	private bool canAnimateAttack = false;
 	private float timerAnimation;
 
-
 	private void Start()
 	{
 		llave = false;
@@ -89,13 +86,14 @@ public class PlayerBehaviour : MonoBehaviour
 		laser = GetComponent<LineRenderer>();
 		laser.useWorldSpace = true;
 		laser.enabled = false;
-		checkDirection = new Vector2(0, 0);
+		//checkDirection = new Vector2(0, 0);
 	}
 
 	void Update()
 	{
-		//Capta movimientos Horizontales y Verticales. 
-		movement.x = Input.GetAxisRaw("Horizontal");
+        #region Movement
+        //Capta movimientos Horizontales y Verticales. 
+        movement.x = Input.GetAxisRaw("Horizontal");
 		movement.y = Input.GetAxisRaw("Vertical");
 		movementDirection = new Vector2(movement.x, movement.y);
 		
@@ -107,12 +105,14 @@ public class PlayerBehaviour : MonoBehaviour
 			//soundManagerScript.PlaySound("Steps");
 			animator.SetFloat("Vertical", movement.y);
 			//soundManagerScript.PlaySound("Steps");
-			facingDirection = new Vector2(movement.x, movement.y);
+			//facingDirection = new Vector2(movement.x, movement.y);
 		}
 		animator.SetFloat("Speed", movement.sqrMagnitude);
+        #endregion
 
-		//Mouse Position
-		actualPositionMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        #region Attack
+        //Mouse Position
+        actualPositionMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
 		//Hacer que salga un proyectil al apretar el boton izquierdo del mouse, e inicia la animacion del ataque
 		if (Input.GetButtonDown("Fire1") && canAttack && !isAttacking && !PauseMenuBehaviour.GameIsPause)
@@ -136,9 +136,11 @@ public class PlayerBehaviour : MonoBehaviour
 			//Con esto, le agregamos un offset del pivot del player al tiro. El alpha multiplier es para separarlo más porque con solo la normal quizas no alcanza.
 			direction = (Vector3)actualPositionMouse - (Vector3)transform.position;
 			direction.Normalize();
-			checkAlpha();
+			direction.z = 0;
+			//checkAlpha();
 			dn = transform.position + direction * alphaMultiplier;
-			Debug.Log("dn: " + dn + "origen: " + transform.position + "mouse: " + direction + "facing: " + facingDirection);
+			dn.z = 0;
+			//Debug.Log("dn: " + dn + "origen: " + transform.position + "mouse: " + direction + "facing: " + facingDirection);
 			Instantiate(proyectil, dn, transform.rotation);
 
 			animator.SetFloat("Speed", movement.sqrMagnitude);
@@ -153,9 +155,11 @@ public class PlayerBehaviour : MonoBehaviour
 			canCount2 = true;
 
 		}
+        #endregion
 
-		//El timer del cooldown para el ataque
-		if (timer >= 0.0f && canCount)
+        #region Timer
+        //El timer del cooldown para el ataque
+        if (timer >= 0.0f && canCount)
 		{
 			timer -= Time.deltaTime;
 		}
@@ -179,6 +183,7 @@ public class PlayerBehaviour : MonoBehaviour
 			animator.SetFloat("OnAttack", 0);
 			isAttacking = false;
 		}
+		#endregion
 	}
 	public void FixedUpdate()
 	{
@@ -192,8 +197,45 @@ public class PlayerBehaviour : MonoBehaviour
 		float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
 		rb.rotation = angle;*/
 	}
+	public void OnTriggerEnter2D(Collider2D col)
+	{
+		//si la colision tiene tag Key
+		if (col.gameObject.CompareTag("Key"))
+		{
+			soundManagerScript.PlaySound("GetKeySound");
+			llave = true;
+			scoreScript.llave = true;
+			Destroy(col.gameObject);
+		}
 
-	public void TakeEnemyDamage(int enemyDamage)
+		//si la colision tiene tag Door
+		if (col.gameObject.CompareTag("Door"))
+		{
+			//y tiene el bool llave en true
+			if (llave)
+			{
+
+				VictoryScreen.SetActive(true);
+				HUD.SetActive(false);
+				Time.timeScale = 0f;
+			}
+			else
+			{
+				//Acá pasaria algo quizas? Un cartel que diga que falta la llave, o bueno, nada.
+				Debug.Log("No tenes la llave");
+			}
+		}
+
+		//Colecciona monedas
+		if (col.gameObject.CompareTag("collectable"))
+		{
+			soundManagerScript.PlaySound("CoinSound");
+			scoreScript.coins += 1;
+			Destroy(col.gameObject);
+		}
+	}
+    #region Functions
+    public void TakeEnemyDamage(int enemyDamage)
 	{
 		health -= enemyDamage;
 		scoreScript.health = health;
@@ -255,45 +297,7 @@ public class PlayerBehaviour : MonoBehaviour
 		}
 	}
 
-	public void OnTriggerEnter2D(Collider2D col)
-	{
-		//si la colision tiene tag Key
-		if (col.gameObject.CompareTag("Key"))
-		{
-			soundManagerScript.PlaySound("GetKeySound");
-			llave = true;
-			scoreScript.llave = true;
-			Destroy(col.gameObject);
-		}
-
-		//si la colision tiene tag Door
-		if (col.gameObject.CompareTag("Door"))
-		{
-			//y tiene el bool llave en true
-			if (llave)
-			{
-				
-				VictoryScreen.SetActive(true);
-				HUD.SetActive(false);
-				Time.timeScale = 0f;
-			}
-			else
-			{
-				//Acá pasaria algo quizas? Un cartel que diga que falta la llave, o bueno, nada.
-				Debug.Log("No tenes la llave");
-			}
-		}
-
-		//Colecciona monedas
-		if (col.gameObject.CompareTag("collectable"))
-		{
-			soundManagerScript.PlaySound("CoinSound");
-			scoreScript.coins += 1;
-			Destroy(col.gameObject);
-		}
-	}
-
-	private void checkAlpha()
+    /*private void checkAlpha()
 	{
 		if (facingDirection.x > checkDirection.x)
 		{
@@ -318,5 +322,6 @@ public class PlayerBehaviour : MonoBehaviour
 			Debug.Log("Up");
 			alphaMultiplier = 3.5f;
 		}
-	}
+	}*/
+    #endregion
 }
