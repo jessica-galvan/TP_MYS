@@ -22,8 +22,6 @@ public class TrentEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-
         if (!PauseMenuBehaviour.GameIsPause)
         {
             transform.position += new Vector3(0.04f * Mathf.Sin(1f * Time.time), 0);
@@ -47,6 +45,7 @@ public class TrentEnemy : MonoBehaviour
         if (health <= 0)
         {
             soundManagerScript.PlaySound("EnemyDie");
+            PlayerBehaviour.kills += 1;
             TrentDie();
         }
     }
@@ -57,9 +56,9 @@ public class TrentEnemy : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        PlayerBehaviour player = collision.GetComponent<PlayerBehaviour>();
-        if (player != null)
+        if (collision.tag == "Player")
         {
+            PlayerBehaviour player = collision.GetComponent<PlayerBehaviour>();
             player.TakeEnemyDamage(1);
         }
     }

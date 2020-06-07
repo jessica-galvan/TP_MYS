@@ -85,5 +85,13 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 			trent.TakeSecondDamage(damage);
 			Destroy(gameObject);
 		}
-	}	
+	}
+
+    public void OnTriggerStay2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Wall")
+        {
+			Debug.Log("DESTROY");
+        }
+    }
 }

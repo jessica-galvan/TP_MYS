@@ -46,6 +46,7 @@ public class Enemy : MonoBehaviour
         if (health <= 0)
         {
             soundManagerScript.PlaySound("EnemyDie");
+            PlayerBehaviour.kills += 1;
             Die();
         }
     }
@@ -53,6 +54,17 @@ public class Enemy : MonoBehaviour
     void Die()
     {
         animatorMole.SetBool("Die", true);
+        PlayerBehaviour.kills += 1;
         Destroy(gameObject, 1f);
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            PlayerBehaviour player = collision.GetComponent<PlayerBehaviour>();
+            player.TakeEnemyDamage(1);
+        }
     }
 }

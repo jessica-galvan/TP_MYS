@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,14 +16,26 @@ public class PauseMenuBehaviour : MonoBehaviour
     private GameObject VictoryScreen;
     [SerializeField]
     private GameObject HUDScreen;
+    [SerializeField]
+    private GameObject[] levels;
+    //public static string level;
+    private bool level1 = false;
+    private bool level2 = false;
 
-    // Start is called before the first frame update
     void Start()
     {
-        
-    }
+        Time.timeScale = 1f;
+        levels = GameObject.FindGameObjectsWithTag("Level");
+        if (levels[0].name == "Level1")
+        {
+            level1 = true;
+        } 
+        else if(levels[0].name == "Level2")
+        {
+            level2 = true;
+        }
+    }    
 
-    // Update is called once per frame
     void Update()
     {
         //Para el Menu de Pausa
@@ -58,7 +71,6 @@ public class PauseMenuBehaviour : MonoBehaviour
     public void LoadMenu()
     {
         SceneManager.LoadScene("mainMenu");
-        Debug.Log("Loading menu, menu not ready yet...");
     }
 
     public void QuitGame()
@@ -70,11 +82,28 @@ public class PauseMenuBehaviour : MonoBehaviour
     //DEATH MENU
     public void Restart()
     {
-        //OJO QUE SI HACEMOS VARIOS NIVELES, TENEMOS QUE ASEGURARNOS DE EN QUE NIVEL ESTA
-        //Time.timeScale = 1f;
-        //SceneManager.LoadScene("Level");
-        Debug.Log("Cargar el nivel de nuevo");
+        Time.timeScale = 1f;
+        if (level2)
+        {
+            SceneManager.LoadScene("Level2");
+        }
+        else if(level1)
+        {
+            SceneManager.LoadScene("Level1");
+        }
     }
 
+    public void NextLevel()
+    {
+        Time.timeScale = 1f;
+        if (level1)
+        {
+            SceneManager.LoadScene("Level1");
+        }
+        else if (level1)
+        {
+            SceneManager.LoadScene("Level2");
+        }
+    }
 
 }

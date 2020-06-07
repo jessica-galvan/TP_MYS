@@ -46,8 +46,7 @@ public class MenuBehaviour : MonoBehaviour
 
     public void Play()
     {
-        SceneManager.LoadScene("SampleScene2");
-        Debug.Log("Loading Level");
+        SceneManager.LoadScene("Level1");
     }
 
     public void QuitGame()
@@ -62,7 +61,6 @@ public class MenuBehaviour : MonoBehaviour
         isMenu = false;
         controls = true;
         ControlsScreen.SetActive(true);
-        Debug.Log("Controls");
     }
     public void ShowCredits()
     {

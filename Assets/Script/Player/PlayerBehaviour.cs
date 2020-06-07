@@ -12,6 +12,7 @@ using UnityEngine.SocialPlatforms.Impl;
 using UnityEditor;
 using UnityEngine.UIElements;
 using System.Diagnostics.Tracing;
+using System.Security.Cryptography;
 
 [RequireComponent(typeof(LineRenderer))]
 
@@ -37,7 +38,7 @@ public class PlayerBehaviour : MonoBehaviour
 	private float alphaMultiplier = 2;
 	[SerializeField]
 	private LayerMask layersToHit;
-
+	
 	[Header("Objetos")]
 	[SerializeField]
 	private Rigidbody2D rb;
@@ -51,15 +52,18 @@ public class PlayerBehaviour : MonoBehaviour
 	private GameObject VictoryScreen;
 	[SerializeField]
 	private GameObject HUD;
-	private Vector2 dn;
 
 	//Raycast
 	private Vector3 actualPositionMouse;
 	private RaycastHit2D hit2D;
 	private LineRenderer laser;
+	private Vector2 dn;
 
 	//Otros
-	private bool llave;
+	private bool llave = false;
+	private GameObject[] keys;
+	private GameObject key;
+	public static int kills;
 	private bool isAttacking = false;
 	private Vector2 movement;
 	private Vector2 movementDirection;
@@ -80,13 +84,16 @@ public class PlayerBehaviour : MonoBehaviour
 
 	private void Start()
 	{
-		llave = false;
 		timer = cooldownAttack;
 		canDie = true;
 		laser = GetComponent<LineRenderer>();
 		laser.useWorldSpace = true;
 		laser.enabled = false;
 		//checkDirection = new Vector2(0, 0);
+		llave = false;
+		keys = GameObject.FindGameObjectsWithTag("Key");
+		key = keys[0];
+		key.SetActive(false);
 	}
 
 	void Update()
@@ -140,7 +147,6 @@ public class PlayerBehaviour : MonoBehaviour
 			//checkAlpha();
 			dn = transform.position + direction * alphaMultiplier;
 			dn.z = 0;
-			//Debug.Log("dn: " + dn + "origen: " + transform.position + "mouse: " + direction + "facing: " + facingDirection);
 			Instantiate(proyectil, dn, transform.rotation);
 
 			animator.SetFloat("Speed", movement.sqrMagnitude);
@@ -155,6 +161,13 @@ public class PlayerBehaviour : MonoBehaviour
 			canCount2 = true;
 
 		}
+        #endregion
+
+        #region Key
+		if(kills > 2 && key)
+        {
+			key.SetActive(true);
+        }
         #endregion
 
         #region Timer
@@ -197,6 +210,7 @@ public class PlayerBehaviour : MonoBehaviour
 		float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
 		rb.rotation = angle;*/
 	}
+
 	public void OnTriggerEnter2D(Collider2D col)
 	{
 		//si la colision tiene tag Key
@@ -234,6 +248,7 @@ public class PlayerBehaviour : MonoBehaviour
 			Destroy(col.gameObject);
 		}
 	}
+
     #region Functions
     public void TakeEnemyDamage(int enemyDamage)
 	{
