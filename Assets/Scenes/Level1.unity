@@ -10973,7 +10973,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LookaheadTime: 0
   m_LookaheadSmoothing: 3
-  m_LookaheadIgnoreY: 0
+  m_LookaheadIgnoreY: 1
   m_XDamping: 20
   m_YDamping: 0
   m_ZDamping: 0
@@ -10986,7 +10986,7 @@ MonoBehaviour:
   m_UnlimitedSoftZone: 0
   m_SoftZoneWidth: 1
   m_SoftZoneHeight: 1
-  m_BiasX: 0.013000011
+  m_BiasX: -0.030000001
   m_BiasY: 0.018000007
   m_CenterOnActivate: 1
   m_GroupFramingMode: 2
@@ -15945,7 +15945,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1717646496}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.0262914, y: 4.88, z: -10}
+  m_LocalPosition: {x: -0.63797665, y: 4.88, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -16506,7 +16506,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1814781405}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.0262914, y: 4.88, z: -10}
+  m_LocalPosition: {x: -0.63797665, y: 4.88, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 259881123}
