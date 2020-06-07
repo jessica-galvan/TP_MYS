@@ -264,7 +264,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: NEXT LEVEL
+  m_Text: PLAY AGAIN!
 --- !u!222 &101196523
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10977,8 +10977,8 @@ MonoBehaviour:
   m_XDamping: 20
   m_YDamping: 0
   m_ZDamping: 0
-  m_ScreenX: 0.26
-  m_ScreenY: 0.55
+  m_ScreenX: 0.23
+  m_ScreenY: 0.45
   m_CameraDistance: 10
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
@@ -10986,7 +10986,7 @@ MonoBehaviour:
   m_UnlimitedSoftZone: 0
   m_SoftZoneWidth: 1
   m_SoftZoneHeight: 1
-  m_BiasX: -0.030000001
+  m_BiasX: -0.029999956
   m_BiasY: 0.018000007
   m_CenterOnActivate: 1
   m_GroupFramingMode: 2
@@ -15007,6 +15007,7 @@ GameObject:
   - component: {fileID: 1484501495}
   - component: {fileID: 1484501494}
   - component: {fileID: 1484501496}
+  - component: {fileID: 1484501497}
   m_Layer: 5
   m_Name: VictoryText
   m_TagString: Untagged
@@ -15088,6 +15089,25 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 4, y: -4}
   m_UseGraphicAlpha: 1
+--- !u!95 &1484501497
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484501492}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 95a8323d9fcd9f04e9118988b139c519, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1499791617
 GameObject:
   m_ObjectHideFlags: 0
@@ -15138,7 +15158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 1}
+  m_Color: {r: 0.7225343, g: 0.8584906, b: 0.63576895, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -15921,7 +15941,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7.06
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -15945,7 +15965,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1717646496}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.63797665, y: 4.88, z: -10}
+  m_LocalPosition: {x: 2.1279254, y: 3.674, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -16485,7 +16505,7 @@ MonoBehaviour:
   m_Follow: {fileID: 326734956}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 5
+    OrthographicSize: 7.06
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -16506,7 +16526,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1814781405}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.63797665, y: 4.88, z: -10}
+  m_LocalPosition: {x: 2.1279254, y: 3.674, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 259881123}
