@@ -25,6 +25,8 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 
 	void Awake()
 	{
+		//Ignoro la colision del proyectil con el jugador.
+		Physics2D.IgnoreLayerCollision(8, 11);
 		//Obtener la posicion actual del mouse dentor del juego.	
 		actualPositionMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		
@@ -61,11 +63,11 @@ public class ProyectilPlayerBehaviour : MonoBehaviour
 			direction = Vector2.Reflect(direction, collision.contacts[0].normal);
 		}
 
-		if (collision.gameObject.CompareTag("Player"))
-		{
-			Debug.Log("Choco");
-			Destroy(gameObject);
-		}
+		//if (collision.gameObject.CompareTag("Player"))
+		//{
+		//	Debug.Log("Choco");
+		//	Destroy(gameObject);
+		//}
 	}
 
 	public void OnTriggerEnter2D(Collider2D collision)
