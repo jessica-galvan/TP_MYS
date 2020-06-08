@@ -10978,7 +10978,7 @@ MonoBehaviour:
   m_YDamping: 0
   m_ZDamping: 0
   m_ScreenX: 0.23
-  m_ScreenY: 0.45
+  m_ScreenY: 0.5
   m_CameraDistance: 10
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
@@ -15940,7 +15940,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7.06
+  orthographic size: 8.03
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -15964,7 +15964,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1717646496}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.661059, y: 3.674, z: -10}
+  m_LocalPosition: {x: 1.644578, y: 4.38, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -16164,7 +16164,7 @@ Transform:
   m_GameObject: {fileID: 1755887552}
   m_LocalRotation: {x: -0, y: -0, z: -0.0005816379, w: 0.9999998}
   m_LocalPosition: {x: 8.144, y: 8.745, z: 33.29899}
-  m_LocalScale: {x: 9.391253, y: 4.5077, z: 1}
+  m_LocalScale: {x: 9.391253, y: 1.8029898, z: 1}
   m_Children: []
   m_Father: {fileID: 2082780946}
   m_RootOrder: 6
@@ -16504,7 +16504,7 @@ MonoBehaviour:
   m_Follow: {fileID: 326734956}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 7.06
+    OrthographicSize: 8.03
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -16525,7 +16525,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1814781405}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.661059, y: 3.674, z: -10}
+  m_LocalPosition: {x: 1.644578, y: 4.38, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 259881123}
@@ -17402,7 +17402,7 @@ PrefabInstance:
     - target: {fileID: 2525069733695650753, guid: 54a2edf1a89ea2240b6d9f4dacfd8cdd,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.91
+      value: -1.71
       objectReference: {fileID: 0}
     - target: {fileID: 2525069733695650753, guid: 54a2edf1a89ea2240b6d9f4dacfd8cdd,
         type: 3}
@@ -17448,6 +17448,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2525069733695650756, guid: 54a2edf1a89ea2240b6d9f4dacfd8cdd,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2525069733695650758, guid: 54a2edf1a89ea2240b6d9f4dacfd8cdd,
         type: 3}
