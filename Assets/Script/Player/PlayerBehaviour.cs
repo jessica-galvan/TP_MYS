@@ -319,6 +319,7 @@ public class PlayerBehaviour : MonoBehaviour
 	{
 		canAttack = true;
 		isAttacking = false;
+		kills = 0;
 		//PauseMenuBehaviour.Recargar(); 
 	}
 

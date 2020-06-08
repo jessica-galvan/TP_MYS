@@ -59,7 +59,7 @@ public class TrentEnemy : MonoBehaviour
         if (collision.tag == "Player")
         {
             PlayerBehaviour player = collision.GetComponent<PlayerBehaviour>();
-            player.TakeEnemyDamage(1);
+            player.TakeEnemyDamage(3);
         }
     }
 }
