@@ -356,7 +356,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 438032145}
-        m_MethodName: NextLevel
+        m_MethodName: Restart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11967,7 +11967,6 @@ MonoBehaviour:
   DeathScreen: {fileID: 386168909}
   VictoryScreen: {fileID: 1677209206}
   HUDScreen: {fileID: 223295181}
-  levels: []
 --- !u!1 &457977597
 GameObject:
   m_ObjectHideFlags: 0
@@ -15965,7 +15964,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1717646496}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.1279254, y: 3.674, z: -10}
+  m_LocalPosition: {x: 2.661059, y: 3.674, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -16526,7 +16525,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1814781405}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.1279254, y: 3.674, z: -10}
+  m_LocalPosition: {x: 2.661059, y: 3.674, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 259881123}
@@ -17329,7 +17328,7 @@ PrefabInstance:
     - target: {fileID: 1226340256662486491, guid: 7eb49a7711939194a9c129b534bf1c59,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.2
+      value: 3.23
       objectReference: {fileID: 0}
     - target: {fileID: 1226340256662486491, guid: 7eb49a7711939194a9c129b534bf1c59,
         type: 3}
@@ -17403,7 +17402,7 @@ PrefabInstance:
     - target: {fileID: 2525069733695650753, guid: 54a2edf1a89ea2240b6d9f4dacfd8cdd,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.25
+      value: -3.91
       objectReference: {fileID: 0}
     - target: {fileID: 2525069733695650753, guid: 54a2edf1a89ea2240b6d9f4dacfd8cdd,
         type: 3}

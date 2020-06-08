@@ -18,7 +18,8 @@ using System.Security.Cryptography;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-	[Header("Variables")]
+    #region Variables
+    [Header("Variables")]
 	[SerializeField]
 	private int health = 3;
 	[SerializeField]
@@ -64,7 +65,7 @@ public class PlayerBehaviour : MonoBehaviour
 	private GameObject[] keys;
 	private GameObject key;
 	public static int kills;
-	private bool isAttacking = false;
+	public static bool isAttacking = false;
 	private Vector2 movement;
 	private Vector2 movementDirection;
 	private Vector2 direction;
@@ -81,7 +82,7 @@ public class PlayerBehaviour : MonoBehaviour
 	private bool canCount2 = false;
 	private bool canAnimateAttack = false;
 	private float timerAnimation;
-
+	#endregion
 	private void Start()
 	{
 		timer = cooldownAttack;
@@ -230,6 +231,7 @@ public class PlayerBehaviour : MonoBehaviour
 			{
 
 				VictoryScreen.SetActive(true);
+				PauseMenuBehaviour.GameIsPause = true;
 				HUD.SetActive(false);
 				Time.timeScale = 0f;
 			}
@@ -266,6 +268,7 @@ public class PlayerBehaviour : MonoBehaviour
 	void PlayerDie()
 	{
 		DeathScreen.SetActive(true);
+		PauseMenuBehaviour.GameIsPause = true;
 		HUD.SetActive(false);
 		Time.timeScale = 0f;
 	}
@@ -312,7 +315,14 @@ public class PlayerBehaviour : MonoBehaviour
 		}
 	}
 
-    /*private void checkAlpha()
+	public static void Restart()
+	{
+		canAttack = true;
+		isAttacking = false;
+		//PauseMenuBehaviour.Recargar(); 
+	}
+
+	/*private void checkAlpha()
 	{
 		if (facingDirection.x > checkDirection.x)
 		{
@@ -338,5 +348,5 @@ public class PlayerBehaviour : MonoBehaviour
 			alphaMultiplier = 3.5f;
 		}
 	}*/
-    #endregion
+	#endregion
 }

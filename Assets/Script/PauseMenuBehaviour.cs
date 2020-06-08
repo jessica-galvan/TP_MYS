@@ -16,16 +16,16 @@ public class PauseMenuBehaviour : MonoBehaviour
     private GameObject VictoryScreen;
     [SerializeField]
     private GameObject HUDScreen;
-    [SerializeField]
-    private GameObject[] levels;
+    //private GameObject[] levels;
     //public static string level;
-    private bool level1 = false;
-    private bool level2 = false;
+    //private bool level1 = false;
+    //private bool level2 = false;
 
     void Start()
     {
+        GameIsPause = false;
         Time.timeScale = 1f;
-        levels = GameObject.FindGameObjectsWithTag("Level");
+        /*levels = GameObject.FindGameObjectsWithTag("Level");
         if (levels[0].name == "Level1")
         {
             level1 = true;
@@ -33,7 +33,7 @@ public class PauseMenuBehaviour : MonoBehaviour
         else if(levels[0].name == "Level2")
         {
             level2 = true;
-        }
+        }*/
     }    
 
     void Update()
@@ -83,6 +83,13 @@ public class PauseMenuBehaviour : MonoBehaviour
     public void Restart()
     {
         Time.timeScale = 1f;
+        SceneManager.LoadScene("Level1");
+        PlayerBehaviour.Restart();
+    }
+
+   /* public void Restart()
+    {
+        Time.timeScale = 1f;
         if (level2)
         {
             SceneManager.LoadScene("Level2");
@@ -91,9 +98,9 @@ public class PauseMenuBehaviour : MonoBehaviour
         {
             SceneManager.LoadScene("Level1");
         }
-    }
+    }*/
 
-    public void NextLevel()
+    /*public void NextLevel()
     {
         Time.timeScale = 1f;
         if (level1)
@@ -104,6 +111,19 @@ public class PauseMenuBehaviour : MonoBehaviour
         {
             SceneManager.LoadScene("Level2");
         }
-    }
+    }*/
 
+    /*public static void Recargar()
+    {
+        Time.timeScale = 1f;
+        levels = GameObject.FindGameObjectsWithTag("Level");
+        if (levels[0].name == "Level1")
+        {
+            level1 = true;
+        }
+        else if (levels[0].name == "Level2")
+        {
+            level2 = true;
+        }
+    }*/
 }
