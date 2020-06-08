@@ -7,8 +7,8 @@ public class MenuBehaviour : MonoBehaviour
 {
     [SerializeField]
     private GameObject CreditsScreen;
-    [SerializeField]
-    private GameObject ControlsScreen;
+    //[SerializeField]
+    //private GameObject ControlsScreen;
     [SerializeField]
     private GameObject MenuScreen;
     [SerializeField]
@@ -16,7 +16,7 @@ public class MenuBehaviour : MonoBehaviour
     private bool isMenu;
     private bool credits;
     private bool instructions;
-    private bool controls;
+    //private bool controls;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +26,7 @@ public class MenuBehaviour : MonoBehaviour
         credits = false;
         instructions = false;
         MenuScreen.SetActive(true); 
-        ControlsScreen.SetActive(false);
+        //ControlsScreen.SetActive(false);
         CreditsScreen.SetActive(false);
         InstructionsScreen.SetActive(false);
     }
@@ -55,13 +55,13 @@ public class MenuBehaviour : MonoBehaviour
         Debug.Log("Quitting game...");
     }
 
-    public void ShowControls()
+    /*public void ShowControls()
     {
         MenuScreen.SetActive(false);
         isMenu = false;
         controls = true;
         ControlsScreen.SetActive(true);
-    }
+    }*/
     public void ShowCredits()
     {
         MenuScreen.SetActive(false);
@@ -90,11 +90,11 @@ public class MenuBehaviour : MonoBehaviour
             instructions = false;
             InstructionsScreen.SetActive(false);
         }
-        else if (controls)
+        /*else if (controls)
         {
             controls = false;
             ControlsScreen.SetActive(false);
-        }
+        }*/
         MenuScreen.SetActive(true);
     } 
 }
