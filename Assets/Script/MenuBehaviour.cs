@@ -39,6 +39,7 @@ public class MenuBehaviour : MonoBehaviour
     public void Play()
     {
         SceneManager.LoadScene("Level1");
+        PlayerBehaviour.Restart();
     }
 
     public void QuitGame()
