@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-
 public class TrentEnemyBullet : MonoBehaviour
 {
     public float speed = 5f;
@@ -7,7 +6,6 @@ public class TrentEnemyBullet : MonoBehaviour
     [SerializeField]
     private int damage = 1;
     
-
     // Start is called before the first frame update
     void Start()
     {

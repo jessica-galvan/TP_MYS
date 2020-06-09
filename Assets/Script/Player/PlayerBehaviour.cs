@@ -1,18 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
-using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 using Vector2 = UnityEngine.Vector3;
-using System.Threading;
-//using UnityEditor.Experimental.Rendering;
-using UnityEngine.SocialPlatforms.Impl;
-//using UnityEditor.Experimental.GraphView;
-using UnityEditor;
-using UnityEngine.UIElements;
-using System.Diagnostics.Tracing;
-using System.Security.Cryptography;
 
 [RequireComponent(typeof(LineRenderer))]
 

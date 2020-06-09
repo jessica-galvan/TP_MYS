@@ -77,6 +77,7 @@
     <Compile Include="Assets\Samples\Cinemachine\2.5.0\Cinemachine Example Scenes\Shared\Scripts\PlayerMoveOnSphere.cs" />
     <Compile Include="Assets\Samples\Cinemachine\2.5.0\Cinemachine Example Scenes\Shared\Scripts\PlayerMovePhysics.cs" />
     <Compile Include="Assets\Script\CursorManager.cs" />
+    <Compile Include="Assets\Script\CursorMenu.cs" />
     <Compile Include="Assets\Script\keyRotation.cs" />
     <Compile Include="Assets\Script\MenuBehaviour.cs" />
     <Compile Include="Assets\Script\MovingEnemy\Enemy.cs" />
